@@ -1,0 +1,69 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+@import './scss/style.scss';
+
+.site-blocks-cover
+{
+ background-image: url(../js/components/images/bg_2.jpg) !important;
+  background-attachment: fixed;
+}
+.unit-5
+{
+ background-image: url(../js/components/images/hero_bg_2.jpg) !important;
+ background-attachment: fixed;
+
+}
+.site
+{
+ background-image: url(../js/components/images/hero_bg_1.jpg) !important;
+ background-attachment: fixed;
+}
+
+.brand
+{
+     background: -webkit-linear-gradient(#fce6e6,#e0fafa,rgb(250, 245, 229),rgb(238, 238, 252));
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color:transparent !important;
+      background-size: cover;
+      background-repeat: no-repeat;
+}
+.text-gray
+{
+    color: lightgray !important;
+}
+
+header
+{
+
+    background-color: transparent !important;
+
+
+    nav
+    {
+
+        ul
+        {
+
+            li
+            {
+
+                a{
+                    color: rgb(213, 235, 248) !important;
+                    font-size: 16px !important;
+                    border-radius: 30px;
+                }
+                a:hover,a:focus{
+                    color: rgb(26, 179, 218) !important;
+                    background-color: rgba(0,0,0,0.2);
+                }
+            }
+        }
+    }
+
+}
