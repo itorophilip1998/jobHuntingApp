@@ -34,14 +34,35 @@
 
                 <div class="col-6 col-xl-2 text-right d-block">
 
-                  <div class="d-inline-block d-xl-none ml-md-0 mr-auto py-3" style="position: relative; top: 3px;"><a href="#" class="site-menu-toggle js-menu-toggle text-white"><span class="icon-menu h3"></span></a></div>
-
+                  <div class="d-inline-block d-xl-none ml-md-0 mr-auto py-3" style="position: relative; top: 3px;">
+                      <a @click="openSideBar" class="site-menu-toggle js-menu-toggle text-white"><span class="icon-menu h3"></span></a></div>
+                        <div class="sidebar">
+                            
+                        </div>
                 </div>
 
               </div>
             </div>
 
-
             </header>
      </div>
  </template>
+
+ <script>
+
+    export default {
+    data() {
+        return {
+
+        }
+    },
+    methods: {
+        openSideBar()
+        {
+            alert('return')
+        }
+    },
+
+    }
+    </script>
+
