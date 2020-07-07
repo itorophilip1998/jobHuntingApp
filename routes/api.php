@@ -14,6 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::post('submitcv', 'CVController@create');
+Route::get('jobindex', 'JobController@index');
+Route::post('postjob', 'JobController@create');
+Route::get('showjob/{id}', 'JobController@show');
+Route::get('editjob/{id}', 'JobController@edit');
+Route::post('updatejob/{id}', 'JobController@update');
+Route::post('delete/{id}', 'JobController@destroy');
+
