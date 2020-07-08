@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Job;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class JobController extends Controller
 {
@@ -14,7 +15,8 @@ class JobController extends Controller
      */
     public function index()
     {
-        $jobs = Job::all();
+        $jobs = Job::all()->paginate(10);
+        // $jobs = DB::table('jobs')->paginate(10);
 
         $response = [
             'success' => true,
@@ -32,7 +34,7 @@ class JobController extends Controller
      */
     public function create(Request $request)
     {
-        $this->validate([$request,
+        $this->validate($request,[
             'job_title' => 'required|string',
             'company' => 'required|string',
             'job_type' => 'required|string',
@@ -129,7 +131,7 @@ class JobController extends Controller
      */
     public function update(Request $request, Job $job)
     {
-        $this->validate([$request,
+        $this->validate($request,[
             'job_title' => 'required|string',
             'company' => 'required|string',
             'job_type' => 'required|string',
