@@ -2,12 +2,12 @@
     <div>
 
   <div class="site-wrap">
-    <div class="unit-5 overlay" >
+    <div class="unit-5 overlay pt-0" >
         <!-- header -->
         <headerApp></headerApp>
         <br><br><br> <br><br> <br>
       <div class="container text-center" style="z-index: 1 !important;"   >
-        <h2 class="mb-0 brand">About</h2>
+        <h2 class="mb-0 brand">About Us</h2>
         <p class="mb-0 unit-6"><router-link to="/" class="text-info" >Home</router-link> / <span>About</span></p>
       </div>
     </div>
@@ -18,8 +18,8 @@
     <div class="site-section">
       <div class="container">
         <div class="row">
-          <div class="col-lg-6 col-md-12 mb-5" data-aos="fade">
-            <img src="./images/img_1.jpg" class="img-md-fluid" alt="Placeholder image">
+          <div class="col-lg-6 col-md-12 mb-5 d-none d-lg-block" data-aos="fade">
+            <img src="./images/bg_1.jpg" class="img-md-fluid w-100" alt="Placeholder image">
           </div>
           <div class="col-lg-6 col-md-12">
             <div class="bg-white pl-lg-5 pl-0  pb-lg-5 pb-0">
@@ -32,8 +32,7 @@
               <li>Quae impedit id maxime fugiat.</li>
               <li>Esse aut iste dolor. In.</li>
             </ul>
-
-            </div>
+             </div>
           </div>
         </div>
       </div>

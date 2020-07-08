@@ -2,13 +2,13 @@
     <div>
  <div class="site-wrap">
 
-    <div class="unit-5 overlay" >
+    <div class="unit-5 overlay pt-0" >
            <!-- header -->
           <headerApp></headerApp>
           <br><br><br><br><br>
       <div class="container text-center" style="z-index: 1 !important;" >
         <h2 class="mb-0 brand">Full Stack Developer</h2>
-        <p class="mb-0 unit-6"><router-link to="/" class="text-info">Home</router-link> / <a href="#" class="text-info">Available Jobs</a> /  <span>Full Stack Developer</span></p>
+        <p class="mb-0 unit-6"><router-link to="/" class="text-info">Home</router-link> / <router-link to="/jobs" class="text-info">Available Jobs</router-link> /  <span>Full Stack Developer</span></p>
       </div>
     </div>
 

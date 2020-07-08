@@ -4,18 +4,14 @@
   <div class="site-wrap">
 
  <!-- header -->
-    <div class="unit-5 overlay">
+    <div class="unit-5 overlay pt-0 ">
          <headerApp></headerApp>
             <br> <br> <br> <br> <br>
       <div class="container text-center" style="z-index: 1 !important;"  >
-        <h2 class="mb-0  brand">Contact</h2>
-        <p class="mb-0 unit-6"><router-link tp="/" class="text-info">Home</router-link> / <span>Contact</span></p>
+        <h2 class="mb-0  brand">Contact Us</h2>
+        <p class="mb-0 unit-6"><router-link to="/" class="text-info">Home</router-link> / <span>Contact</span></p>
       </div>
     </div>
-
-
-
-
     <div class="site-section bg-light">
       <div class="container">
         <div class="row">

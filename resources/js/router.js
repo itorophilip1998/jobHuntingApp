@@ -9,6 +9,7 @@ import contact from '../js/components/contact';
 import jobSingle from '../js/components/job-single';
 import jobs from '../js/components/jobs';
 import newpost from '../js/components/new-post';
+import Premium from '../js/components/premium';
 
 const routes = [
         { path: '/',
@@ -60,6 +61,15 @@ const routes = [
          meta: {
                 auth: true,
                 title: 'Post'
+         }
+
+        },
+        {
+         path: '/premium',
+         component:Premium,
+         meta: {
+                auth: true,
+                title: 'Premium'
          }
 
         },
