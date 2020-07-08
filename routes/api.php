@@ -25,4 +25,5 @@ Route::get('showjob/{id}', 'JobController@show');
 Route::get('editjob/{id}', 'JobController@edit');
 Route::post('updatejob/{id}', 'JobController@update');
 Route::post('deletejob/{id}', 'JobController@destroy');
+Route::post('/sendmail/send', 'SendEmailController@send');
 
