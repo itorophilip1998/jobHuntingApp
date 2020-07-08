@@ -1,7 +1,7 @@
 <template>
     <div class="">
         <!-- Main section -->
-           <main  class=" overflow-hidden">
+           <main>
                 <router-view></router-view>
            </main>
     </div>
@@ -9,7 +9,9 @@
 
 <script>
     export default {
+              methods: {
 
+        },
         mounted() {
             console.log('Component mounted.')
         },

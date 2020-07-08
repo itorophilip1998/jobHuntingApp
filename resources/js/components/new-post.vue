@@ -2,7 +2,7 @@
    <div>
 
   <div class="site-wrap">
-    <div class="unit-5 overlay" >
+    <div class="unit-5 overlay pt-0 " >
         <!--header-->
         <headerApp></headerApp>
         <br><br><br><br><br>
@@ -23,7 +23,7 @@
 
 
 
-            <form action="#" class="p-5 bg-white">
+            <form @submit.prevent="post()" class="p-5 bg-white">
 
               <div class="row form-group">
                 <div class="col-md-12 mb-3 mb-md-0">
@@ -212,7 +212,14 @@
     components:{
     headerApp,
     footerApp
-    }
+    },
+     methods: {
+          post()
+          {
+
+          }
+     },
+
     }
     </script>
 
