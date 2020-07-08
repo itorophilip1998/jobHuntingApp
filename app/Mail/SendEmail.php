@@ -29,6 +29,6 @@ class SendEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return response()->json($data); 
     }
 }
