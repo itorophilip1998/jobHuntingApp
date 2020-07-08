@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\CV;
+use App\Profile;
 use Illuminate\Http\Request;
 
-class CVController extends Controller
+class ProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,7 +26,9 @@ class CVController extends Controller
     {
         $this->validate([$request,
         'first_name' => 'required|string',
-        'last_name' => 'required|string',
+        'other_names' => 'required|string',
+        'profile_pics' => 'required|string',
+        'gender' => 'required|string',
         'phone_no' => 'required|string',
         'email' => 'required|string',
         'social_media_handle' => 'required|string',
@@ -34,25 +36,29 @@ class CVController extends Controller
         'technical_skills' => 'required|text',
         'soft_skills' => 'required|text',
         'volunteer_experience' => 'required|text',
+        'years_of_experience' => 'required|string',
         'education' => 'required|text',
         ]);
 
         
-        $cv = new CV;
-        $cv->first_name = $request->input('first_name');
-        $cv->last_name = $request->input('last_name');
-        $cv->phone_no = $request->input('phone_no');
-        $cv->email = $request->input('email');
-        $cv->social_media_handle = $request->input('social_media_handle');
-        $cv->bio = $request->input('bio');
-        $cv->technical_skills = $request->input('technical_skills');
-        $cv->soft_skills= $request->input('soft_skills');
-        $cv->volunteer_experience = $request->input('volunteer_experience');
-        $cv->education = $request->input('education');
-        $cv->save();
+        $profile = new Profile;
+        $profile->first_name = $request->input('first_name');
+        $profile->other_names = $request->input('other_names');
+        $profile->profile_pic = $request->input('profile_pic');
+        $profile->gender = $request->input('gender');
+        $profile->phone_no = $request->input('phone_no');
+        $profile->email = $request->input('email');
+        $profile->social_media_handle = $request->input('social_media_handle');
+        $profile->bio = $request->input('bio');
+        $profile->technical_skills = $request->input('technical_skills');
+        $profile->soft_skills= $request->input('soft_skills');
+        $profile->volunteer_experience = $request->input('volunteer_experience');
+        $profile->years_of_experience = $request->input('years_of_experience');
+        $profile->education = $request->input('education');
+        $profile->save();
 
         return response()->json([
-            "message" => "cv created successfully!"
+            "message" => "Profile created successfully!"
         ], 201);
     }
 
@@ -70,10 +76,10 @@ class CVController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\CV  $cV
+     * @param  \App\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function show(CV $cv)
+    public function show(Profile $profile)
     {
         //
     }
@@ -81,10 +87,10 @@ class CVController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\CV  $cv
+     * @param  \App\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function edit(CV $cv)
+    public function edit(Profile $profile)
     {
         //
     }
@@ -93,10 +99,10 @@ class CVController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\CV  $cV
+     * @param  \App\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CV $cv)
+    public function update(Request $request, Profile $profile)
     {
         //
     }
@@ -104,10 +110,10 @@ class CVController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\CV  $cV
+     * @param  \App\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CV $cv)
+    public function destroy(Profile $profile)
     {
         //
     }

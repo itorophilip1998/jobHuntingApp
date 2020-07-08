@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCVSTable extends Migration
+class CreateProfilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateCVSTable extends Migration
      */
     public function up()
     {
-        Schema::create('c_v_s', function (Blueprint $table) {
+        Schema::create('profiles', function (Blueprint $table) {
             $table->id();
             $table->string('first_name');
-            $table->string('last_name');
+            $table->string('other_names');
+            $table->string('profile_pic');
+            $table->string('gender');
             $table->string('phone_no');
             $table->string('email');
             $table->string('social_media_handle');
@@ -24,6 +26,7 @@ class CreateCVSTable extends Migration
             $table->text('technical_skills');
             $table->text('soft_skills');
             $table->text('volunteer_experience');
+            $table->string('years_of_experience');
             $table->text('education');
             $table->timestamps();
         });
@@ -36,6 +39,6 @@ class CreateCVSTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('c_v_s');
+        Schema::dropIfExists('profiles');
     }
 }

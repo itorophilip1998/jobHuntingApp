@@ -114,7 +114,7 @@ class JobController extends Controller
 
         $response = [
             'success' => true,
-            'message' => 'Book retrieved successfully.'
+            'message' => 'job retrieved successfully.'
         ];
 
         return response()->json($response, 200);
