@@ -22,7 +22,10 @@ class CreateJobsTable extends Migration
             $table->text('description');
             $table->string('requirements');
             $table->string('salary_range');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

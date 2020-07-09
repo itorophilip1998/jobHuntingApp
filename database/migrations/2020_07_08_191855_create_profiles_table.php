@@ -28,7 +28,10 @@ class CreateProfilesTable extends Migration
             $table->text('volunteer_experience');
             $table->string('years_of_experience');
             $table->text('education');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

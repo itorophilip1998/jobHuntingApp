@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::post('postprofile', 'ProfileController@create');
-Route::get('jobindex', 'JobController@index');
+Route::get('/jobindex', 'JobController@index');
 Route::post('postjob', 'JobController@create');
 Route::get('showjob/{id}', 'JobController@show');
 Route::get('editjob/{id}', 'JobController@edit');

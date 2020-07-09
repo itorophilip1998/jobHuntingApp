@@ -15,8 +15,9 @@ class JobController extends Controller
      */
     public function index()
     {
-        $jobs = Job::all()->paginate(10);
-        // $jobs = DB::table('jobs')->paginate(10);
+        // $jobs = Job::all()->paginate(10);
+        $jobs = DB::table('jobs')->paginate(10);
+        // $jobs = Job::all();
 
         $response = [
             'success' => true,
