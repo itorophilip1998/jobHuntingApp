@@ -20,90 +20,91 @@
         <div class="row">
 
           <div class="col-md-12 col-lg-8 mb-5">
-
-
-
             <form @submit.prevent="post()" class="p-5 bg-white">
 
               <div class="row form-group">
                 <div class="col-md-12 mb-3 mb-md-0">
-                  <label for="option-price-1">
-                    <input type="checkbox" id="option-price-1"> <span class="text-success">$300</span> For 30 days
-                  </label>
-                </div>
-                <div class="col-md-12 mb-3 mb-md-0">
-                  <label for="option-price-2">
-                    <input type="checkbox" id="option-price-2"> <span class="text-success">$200</span> / Monthly Recurring
-                  </label>
+                  <label class="font-weight-bold" for="fullname">Salary Range</label> <br>
+                    <select v-model="salary_range" class="form-control"  name="" id="">
+                      <option>From <b>&#8358;</b>10,000  to  <b>&#8358;</b>49,000</option>
+                      <option>From <b>&#8358;</b>50,000  to  <b>&#8358;</b>99,000</option>
+                      <option>From <b>&#8358;</b>100,000  to  <b>&#8358;</b>500,000</option>
+                      <option><b>&#8358;</b>500,000 and above</option>
+                    </select>
                 </div>
               </div>
 
               <div class="row form-group">
                 <div class="col-md-12 mb-3 mb-md-0">
-                  <label class="font-weight-bold" for="fullname">Job Title</label>
-                  <input type="text" id="fullname" class="form-control" placeholder="eg. Full Stack Frontend">
+                  <label class="font-weight-bold" for="fullname">Job Title <span class="text-danger">*</span> </label>
+                  <input v-model="job_title" required type="text" id="fullname" class="form-control" placeholder="eg. Full Stack Frontend">
                 </div>
               </div>
 
               <div class="row form-group mb-5">
                 <div class="col-md-12 mb-3 mb-md-0">
-                  <label class="font-weight-bold" for="fullname">Company</label>
-                  <input type="text" id="fullname" class="form-control" placeholder="eg. Facebook, Inc.">
+                  <label class="font-weight-bold" for="fullname">Company <span class="text-danger">*</span> </label>
+                  <input v-model="company"  type="text" id="fullname" class="form-control" placeholder="eg. Facebook, Inc." required>
                 </div>
               </div>
-
 
               <div class="row form-group">
                 <div class="col-md-12"><h3>Job Type</h3></div>
                 <div class="col-md-12 mb-3 mb-md-0">
-                  <label for="option-job-type-1">
-                    <input type="radio" id="option-job-type-1" name="job-type"> Full Time
+                  <label for="option-job-type-1"  >
+                    <input @change="fullTime" type="radio" id="option-job-type-1" name="job-type"> Full Time
                   </label>
                 </div>
                 <div class="col-md-12 mb-3 mb-md-0">
                   <label for="option-job-type-2">
-                    <input type="radio" id="option-job-type-2" name="job-type"> Part Time
+                    <input @change="partTime"  type="radio" id="option-job-type-2" name="job-type"> Part Time
                   </label>
                 </div>
-
                 <div class="col-md-12 mb-3 mb-md-0">
                   <label for="option-job-type-3">
-                    <input type="radio" id="option-job-type-3" name="job-type"> Freelance
+                    <input @change="freelance"  type="radio" id="option-job-type-3" name="job-type"> Freelance
                     </label>
                 </div>
                 <div class="col-md-12 mb-3 mb-md-0">
                   <label for="option-job-type-4">
-                    <input type="radio" id="option-job-type-4" name="job-type"> Internship
+                    <input @change="internship"  type="radio" id="option-job-type-4" name="job-type"> Internship
                   </label>
                 </div>
                 <div class="col-md-12 mb-3 mb-md-0">
                   <label for="option-job-type-4">
-                    <input type="radio" id="option-job-type-4" name="job-type"> Termporary
+                    <input  @change="termporary"  type="radio" id="option-job-type-4" name="job-type"> Termporary
                   </label>
                 </div>
 
               </div>
 
               <div class="row form-group mb-4">
-                <div class="col-md-12"><h3>Location</h3></div>
+                <div class="col-md-12"><h3>Location <span class="text-danger">*</span> </h3></div>
                 <div class="col-md-12 mb-3 mb-md-0">
-                  <input type="text" class="form-control" placeholder="New York City">
+                  <input type="text" v-model="location" required class="form-control" placeholder="New York City">
                 </div>
               </div>
 
               <div class="row form-group">
-                <div class="col-md-12"><h3>Job Description</h3></div>
+                <div class="col-md-12"><h3>Job Description <span class="text-danger">*</span></h3></div>
                 <div class="col-md-12 mb-3 mb-md-0">
-                  <textarea name="" class="form-control" id="" cols="30" rows="5"></textarea>
+                  <textarea name="" v-model="description"  class="form-control" id="" cols="30" rows="5" required></textarea>
+                </div>
+              </div>
+
+
+              <div class="row form-group">
+                <div class="col-md-12"><h3>Job Requirements <span class="text-danger">*</span></h3></div>
+                <div class="col-md-12 mb-3 mb-md-0">
+                  <textarea name="" v-model="requirements"  class="form-control" id="" cols="30" rows="3" required></textarea>
                 </div>
               </div>
 
               <div class="row form-group">
                 <div class="col-md-12">
-                  <input type="submit" value="Post" class="btn btn-primary  py-2 px-5">
+                  <input type="submit" value="Post" class="btn btn-primary shadow py-2 px-5">
                 </div>
               </div>
-
 
             </form>
           </div>
@@ -125,97 +126,85 @@
             <div class="p-4 mb-3 bg-white">
               <h3 class="h5 text-black mb-3">More Info</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa ad iure porro mollitia architecto hic consequuntur. Distinctio nisi perferendis dolore, ipsa consectetur</p>
-              <p><a href="#" class="btn btn-primary  py-2 px-4">Learn More</a></p>
+              <p><a href="#" class="btn btn-primary shadow py-2 px-4">Learn More</a></p>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-
-
-
-    <div class="site-section">
-      <div class="container">
-        <div class="row justify-content-center text-center mb-5">
-          <div class="col-md-6" data-aos="fade" >
-            <h2>Frequently Ask Questions</h2>
-          </div>
-        </div>
-
-
-        <div class="row justify-content-center" data-aos="fade" data-aos-delay="100">
-          <div class="col-md-8">
-            <div class="accordion unit-8" id="accordion">
-            <div class="accordion-item">
-              <h3 class="mb-0 heading">
-                <a class="btn-block" data-toggle="collapse" href="#collapseOne" role="button" aria-expanded="true" aria-controls="collapseOne">What is the name of your company<span class="icon"></span></a>
-              </h3>
-              <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                <div class="body-text">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur quae cumque perspiciatis aperiam accusantium facilis provident aspernatur nisi optio debitis dolorum, est eum eligendi vero aut ad necessitatibus nulla sit labore doloremque magnam! Ex molestiae, dolor tempora, ad fuga minima enim mollitia consequuntur, necessitatibus praesentium eligendi officia recusandae culpa tempore eaque quasi ullam magnam modi quidem in amet. Quod debitis error placeat, tempore quasi aliquid eaque vel facilis culpa voluptate.</p>
-                </div>
-              </div>
-            </div> <!-- .accordion-item -->
-
-            <div class="accordion-item">
-              <h3 class="mb-0 heading">
-                <a class="btn-block" data-toggle="collapse" href="#collapseTwo" role="button" aria-expanded="false" aria-controls="collapseTwo">How much pay for 3  months?<span class="icon"></span></a>
-              </h3>
-              <div id="collapseTwo" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                <div class="body-text">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel ad laborum expedita. Nostrum iure atque enim quisquam minima distinctio omnis, consequatur aliquam suscipit, quidem, esse aspernatur! Libero, excepturi animi repellendus porro impedit nihil in doloremque a quaerat enim voluptatum, perspiciatis, quas dignissimos maxime ut cum reiciendis eius dolorum voluptatem aliquam!</p>
-                </div>
-              </div>
-            </div> <!-- .accordion-item -->
-
-            <div class="accordion-item">
-              <h3 class="mb-0 heading">
-                <a class="btn-block" data-toggle="collapse" href="#collapseThree" role="button" aria-expanded="false" aria-controls="collapseThree">Do I need to register?  <span class="icon"></span></a>
-              </h3>
-              <div id="collapseThree" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                <div class="body-text">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel ad laborum expedita. Nostrum iure atque enim quisquam minima distinctio omnis, consequatur aliquam suscipit, quidem, esse aspernatur! Libero, excepturi animi repellendus porro impedit nihil in doloremque a quaerat enim voluptatum, perspiciatis, quas dignissimos maxime ut cum reiciendis eius dolorum voluptatem aliquam!</p>
-                </div>
-              </div>
-            </div> <!-- .accordion-item -->
-
-            <div class="accordion-item">
-              <h3 class="mb-0 heading">
-                <a class="btn-block" data-toggle="collapse" href="#collapseFour" role="button" aria-expanded="false" aria-controls="collapseFour">Who should I contact in case of support.<span class="icon"></span></a>
-              </h3>
-              <div id="collapseFour" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                <div class="body-text">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel ad laborum expedita. Nostrum iure atque enim quisquam minima distinctio omnis, consequatur aliquam suscipit, quidem, esse aspernatur! Libero, excepturi animi repellendus porro impedit nihil in doloremque a quaerat enim voluptatum, perspiciatis, quas dignissimos maxime ut cum reiciendis eius dolorum voluptatem aliquam!</p>
-                </div>
-              </div>
-            </div> <!-- .accordion-item -->
-
-          </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
 <!-- footer -->
   <footerApp></footerApp>
-  </div>
-
+</div>
    </div>
 </template>
 
 <script>
+    import Swal from 'sweetalert2'
     import headerApp from './layout/header'
     import footerApp from './layout/footer'
     export default {
     components:{
     headerApp,
-    footerApp
+    footerApp,
+    },
+    data() {
+        return {
+                salary_range:'',
+                job_title:'',
+                company:'',
+                job_type:'',
+                location:'',
+                description:'',
+                requirements:'',
+        }
     },
      methods: {
+            message(place,logo,topic,btn,time){
+            Swal.fire({
+            position: place,
+            icon: logo,
+            title: topic,
+            showConfirmButton: btn,
+            timer: time
+            })
+
+            },
+         freelance()
+          {
+            this.job_type="Freelance";
+          },
+          partTime()
+          {
+            this.job_type="PartTime";
+          },
+        fullTime()
+          {
+            this.job_type="Full Time";
+          },
+          internship()
+          {
+            this.job_type="Internship";
+          },
+          termporary()
+          {
+            this.job_type="Termporary";
+          },
+
+
           post()
           {
+            const formData = new FormData();
+            formData.append('salary_range',this.salary_range);
+            formData.append('job_title',this.job_title);
+            formData.append('company', this.company);
+            formData.append('location', this.location);
+            formData.append('job_type', this.job_type);
+            formData.append('description', this.description);
+            formData.append('requirements', this.requirements);
+            axios.post('/postjob', formData).then((res) => {
+            this.message('top-end','success',res.data.message,false,1500);
+            })
 
           }
      },

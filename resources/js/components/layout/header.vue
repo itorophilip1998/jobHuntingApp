@@ -17,11 +17,11 @@
                       <li class="has-children">
                         <a href="#">Available Jobs</a>
                         <ul class="dropdown bg-secondary border-0">
-                          <li><router-link to="/job/Fulltime">Full Time</router-link></li>
-                          <li><router-link to="/job/Parttime">Part Time</router-link></li>
-                          <li><router-link to="/job/Freelance">Freelance</router-link></li>
-                          <li><router-link to="/job/Internship">Internship</router-link></li>
-                          <li><router-link to="/job/Termporary">Termporary</router-link></li>
+                          <li><router-link to="/jobs">Full Time</router-link></li>
+                          <li><router-link to="/jobs">Part Time</router-link></li>
+                          <li><router-link to="/jobs">Freelance</router-link></li>
+                          <li><router-link to="/jobs">Internship</router-link></li>
+                          <li><router-link to="/jobs">Termporary</router-link></li>
                         </ul>
                       </li>
                       <li><router-link to="/premium" >Premium</router-link></li>
@@ -58,11 +58,11 @@
                     <li >  <a class="text-primary link" data-target="#my-collapse" data-toggle="collapse" aria-expanded="false" aria-controls="my-collapse"> <i class="fa fa-folder-o" aria-hidden="true"></i> Available Jobs</a></li>
                         <div id="my-collapse" class="collapse pl-4 ">
                             <ul class="border-0" style="padding: 0 !important;">
-                                <li @click="cancel()"><router-link class="link"  to="/job/Fulltime">Full Time</router-link></li>
-                                <li @click="cancel()"><router-link class="link" to="/job/Parttime">Part Time</router-link></li>
-                                <li @click="cancel()"><router-link class="link" to="/job/Freelance">Freelance</router-link></li>
-                                <li @click="cancel()"><router-link class="link" to="/job/Internship">Internship</router-link></li>
-                                <li @click="cancel()"><router-link class="link" to="/job/Termporary">Termporary</router-link></li>
+                                <li @click="cancel()"><router-link class="link"  to="/jobs">Full Time</router-link></li>
+                                <li @click="cancel()"><router-link class="link" to="/jobs">Part Time</router-link></li>
+                                <li @click="cancel()"><router-link class="link" to="/jobs">Freelance</router-link></li>
+                                <li @click="cancel()"><router-link class="link" to="/jobs">Internship</router-link></li>
+                                <li @click="cancel()"><router-link class="link" to="/jobs">Termporary</router-link></li>
                               </ul>
                         </div>
 

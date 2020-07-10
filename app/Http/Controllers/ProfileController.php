@@ -24,7 +24,7 @@ class ProfileController extends Controller
      */
     public function create(Request $request)
     {
-        $this->validate([$request,
+        $this->validate($request,[
         'first_name' => 'required|string',
         'other_names' => 'required|string',
         'profile_pics' => 'required|string',
@@ -40,7 +40,7 @@ class ProfileController extends Controller
         'education' => 'required|text',
         ]);
 
-        
+
         $profile = new Profile;
         $profile->first_name = $request->input('first_name');
         $profile->other_names = $request->input('other_names');

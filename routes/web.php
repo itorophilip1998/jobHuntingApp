@@ -18,3 +18,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'WelcomeController@index');
+
+Route::post('/postprofile', 'ProfileController@create');
+Route::get('/getjobs', 'JobController@index');
+Route::post('/postjob', 'JobController@create');
+Route::get('/showjob/{id}', 'JobController@show');
+Route::get('/editjob/{id}', 'JobController@edit');
+Route::put('/updatejob/{id}', 'JobController@update');
+Route::delete('/deletejob/{id}', 'JobController@destroy');

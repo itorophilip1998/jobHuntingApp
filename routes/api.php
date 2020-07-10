@@ -18,11 +18,11 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::post('postprofile', 'ProfileController@create');
-Route::get('jobindex', 'JobController@index');
-Route::post('postjob', 'JobController@create');
-Route::get('showjob/{id}', 'JobController@show');
-Route::get('editjob/{id}', 'JobController@edit');
-Route::post('updatejob/{id}', 'JobController@update');
-Route::post('deletejob/{id}', 'JobController@destroy');
+Route::post('/postprofile', 'ProfileController@create');
+Route::get('/jobindex', 'JobController@index');
+Route::post('/postjob', 'JobController@create');
+Route::get('/showjob/{id}', 'JobController@show');
+Route::get('/editjob/{id}', 'JobController@edit');
+Route::post('/updatejob/{id}', 'JobController@update');
+Route::post('/deletejob/{id}', 'JobController@destroy');
 

@@ -7,15 +7,14 @@
           <headerApp></headerApp>
           <br><br><br><br><br>
       <div class="container text-center" style="z-index: 1 !important;" >
-        <h2 class="mb-0 brand">Full Stack Developer</h2>
-        <p class="mb-0 unit-6"><router-link to="/" class="text-info">Home</router-link> / <router-link to="/jobs" class="text-info">Available Jobs</router-link> /  <span>Full Stack Developer</span></p>
+        <h2 class="mb-0 brand">{{job.job_title}}</h2>
+        <p class="mb-0 unit-6"><router-link to="/" class="text-info">Home</router-link> / <router-link to="/jobs" class="text-info">Available Jobs</router-link> /  <span>{{job.job_title}}</span></p>
       </div>
     </div>
 
     <div class="site-section bg-light">
       <div class="container">
         <div class="row">
-
           <div class="col-md-12 col-lg-8 mb-5">
 
 
@@ -24,108 +23,160 @@
 
               <div class="mb-4 mb-md-5 mr-5">
                <div class="job-post-item-header d-flex align-items-center">
-                 <h2 class="mr-3 text-black h4">Full Stack Developer</h2>
+                 <h2 class="mr-3 text-dark h4"><b>{{job.job_title}}</b></h2>
                  <div class="badge-wrap">
-                  <span class="bg-danger text-white badge py-2 px-4">Temporary</span>
+                  <span
+                                 :class="` text-white
+                                 ${(job.job_type=='Full Time') ? 'bg-danger': '' }
+                                 ${(job.job_type=='Freelance') ? 'bg-info': '' }
+                                 ${(job.job_type=='PartTime') ? 'bg-warning text-dark  ': '' }
+                                 ${(job.job_type=='Internship') ? 'bg-secondary': '' }
+                                 ${(job.job_type=='Termporary') ? 'bg-success': '' }
+                                 ${(job.job_type=='Freelance') ? 'bg-secondary': '' }
+                                 badge py-2 px-4`">{{job.job_type}} </span>
                  </div>
+
                </div>
                <div class="job-post-item-body d-block d-md-flex">
-                 <div class="mr-3"><span class="fl-bigmug-line-portfolio23"></span> <a href="#">New York Times</a></div>
-                 <div><span class="fl-bigmug-line-big104"></span> <span>New York City, USA</span></div>
+                 <div class="mr-3"><span class="fl-bigmug-line-portfolio23"></span> <a href="#">{{job.company}}</a></div>
+                 <div><span class="fl-bigmug-line-big104"></span> <span>{{job.location}}</span></div>
                </div>
               </div>
 
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, iure beatae! Voluptas tempora doloremque atque repudiandae maiores odio magni. Illo ut nihil officia numquam in. Deleniti pariatur at minima quaerat!</p>
-              <p>Qui corrupti animi, dignissimos veritatis, necessitatibus consequuntur nobis, placeat beatae dolorum ullam harum at atque dolor! Accusantium cupiditate ipsum placeat, vel voluptatibus non eaque, animi neque minima facere provident aspernatur!</p>
-              <p>Porro magni numquam ex natus repellat accusamus laborum blanditiis odit consequatur at veritatis nostrum provident recusandae dolores incidunt distinctio facere, nulla odio quo tempore libero! Voluptatum porro velit, qui optio.</p>
-              <p>Ducimus odio, fugiat pariatur. Corporis nobis perferendis voluptatum nostrum nesciunt, voluptates pariatur architecto consequatur! Praesentium dicta enim, laboriosam natus doloribus corrupti in sequi perferendis, cupiditate perspiciatis, porro animi sed impedit.</p>
-              <p>Illum possimus, enim eaque recusandae earum omnis tempore suscipit sapiente voluptas nam quia dicta, repellendus incidunt dolor dolores nemo laboriosam, quasi nulla deserunt neque est ipsam velit cumque. Quos, ipsum!</p>
-              <p>Dignissimos ipsa quibusdam id qui maiores magnam, nesciunt? Voluptatibus nulla quas itaque nostrum necessitatibus repudiandae quaerat facere, amet aperiam iste aspernatur ratione cupiditate est voluptates non. Suscipit corporis, soluta neque.</p>
-              <p>Pariatur itaque reiciendis consectetur, deserunt quam adipisci odio doloribus voluptatem laboriosam magni ut repellat tempore? Minus sit officia impedit veritatis reiciendis debitis iure, porro in quaerat inventore nisi sequi quos!</p>
+              <p>
+                  <h6><b>Description</b></h6>
+                  {{job.description}}
+             </p>
+              <p>
+                  <h6><b>Requirements</b></h6>
+                  {{job.requirements}}
+             </p>
+              <p>
+                  <h6><b>Salary Range</b></h6>
+                  {{job.salary_range}}
+              </p>
 
-              <p class="mt-5"><a href="#" class="btn btn-primary  py-2 px-4">Apply Job</a></p>
+              <p class="mt-5">
+                  <!-- seekers console -->
+                    <a href="#" class="btn btn-primary shadow py-2 px-4" data-toggle="modal" data-target="#seekers" >Apply Job</a>    <!-- Modal -->
+                               <div class="modal fade" id="seekers" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                                   <div class="modal-dialog" role="document">
+                                       <div class="modal-content">
+                                           <div class="modal-header">
+                                               <h5 class="modal-title">Modal title</h5>
+                                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                       <span aria-hidden="true">&times;</span>
+                                                   </button>
+                                           </div>
+                                           <div class="modal-body">
+                                               Body
+                                           </div>
+                                           <div class="modal-footer">
+                                               <button type="button" class="btn btn-secondary shadow" data-dismiss="modal">Close</button>
+                                               <button type="button" class="btn btn-primary shadow">Save</button>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+
+              <!-- employers console-->
+              <a href="#" class="btn shadow py-2 px-4" data-toggle="modal" data-target="#employers" >Edit</a>
+              <a href="#" class="btn btn-primary  shadow py-2 px-4">Delete</a>
+              <!-- Modal -->
+              <div class="modal fade" id="employers" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                  <div class="modal-dialog shadow" role="document">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title">Edit Job</h5>
+                      </div>
+         <div class="modal-body">
+           <form  class="p-2  bg-white">
+              <div class="row form-group">
+                <div class="col-md-12 mb-1 mb-md-0">
+                  <label class="font-weight-bold" for="fullname">Salary Range</label> <br>
+                    <select v-model="job.salary_range" class="form-control"  name="" id="">
+                      <option>{{job.salary_range}}</option>
+                      <option>From <b>&#8358;</b>10,000  to  <b>&#8358;</b>49,000</option>
+                      <option>From <b>&#8358;</b>50,000  to  <b>&#8358;</b>99,000</option>
+                      <option>From <b>&#8358;</b>100,000  to  <b>&#8358;</b>500,000</option>
+                      <option><b>&#8358;</b>500,000 and above</option>
+                    </select>
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-12 mb-3 mb-md-0">
+                  <label class="font-weight-bold" for="fullname">Job Title <span class="text-danger">*</span> </label>
+                  <input v-model="job.job_title" required type="text" id="fullname" class="form-control" placeholder="eg. Full Stack Frontend">
+                </div>
+              </div>
+
+              <div class="row form-group mb-4">
+                <div class="col-md-12 mb-3 mb-md-0">
+                  <label class="font-weight-bold" for="fullname">Company <span class="text-danger">*</span> </label>
+                  <input v-model="job.company"  type="text" id="fullname" class="form-control" placeholder="eg. Facebook, Inc." required>
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <div class="col-md-12"><h3>Job Type</h3></div>
+                <div class="col-md-12 mb-3 mb-md-0">
+
+                 <select v-model="job.job_type" class="form-control"  name="" id="">
+                      <option selected>{{job.job_type}}</option>
+                      <option>Full Time</option>
+                      <option>Part Time</option>
+                      <option>Freelance</option>
+                      <option>Internship</option>
+                      <option>Termporary</option>
+                    </select>
+                </div>
+
+              </div>
+              <div class="row form-group mb-4">
+                <div class="col-md-12"><h3>Location <span class="text-danger">*</span> </h3></div>
+                <div class="col-md-12 mb-3 mb-md-0">
+                  <input type="text" v-model="job.location" required class="form-control" placeholder="New York City">
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-12"><h3>Job Description <span class="text-danger">*</span></h3></div>
+                <div class="col-md-12 mb-3 mb-md-0">
+                  <textarea name="" v-model="job.description"  class="form-control" id="" cols="30" rows="5" required></textarea>
+                </div>
+              </div>
+
+
+              <div class="row form-group">
+                <div class="col-md-12"><h3>Job Requirements <span class="text-danger">*</span></h3></div>
+                <div class="col-md-12 mb-3 mb-md-0">
+                  <textarea v-model="job.requirements" name=""  class="form-control" id="" cols="30" rows="3" required></textarea>
+                </div>
+              </div>
+
+
+            </form>
+             </div>
+                <div class="modal-footer">
+                    <button @click="deletePost()"  type="button" class="btn shadow btn-secondary" data-dismiss="modal">Close</button>
+                    <button @click="post()"  type="button" class="btn shadow btn-primary">Update</button>
+                </div>
+                      </div>
+                  </div>
+              </div>
+            </p>
             </div>
           </div>
 
           <div class="col-lg-4">
-
-
             <div class="p-4 mb-3 bg-white">
               <h3 class="h5 text-black mb-3">More Info</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa ad iure porro mollitia architecto hic consequuntur. Distinctio nisi perferendis dolore, ipsa consectetur</p>
-              <p><a href="#" class="btn btn-primary  py-2 px-4">Apply Job</a></p>
+              <p><a href="#" class="btn btn-primary  py-2 px-4">learn more</a></p>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-
-
-
-    <div class="site-section">
-      <div class="container">
-        <div class="row justify-content-center text-center mb-5">
-          <div class="col-md-6" data-aos="fade" >
-            <h2>Frequently Ask Questions</h2>
-          </div>
-        </div>
-
-
-        <div class="row justify-content-center" data-aos="fade" data-aos-delay="100">
-          <div class="col-md-8">
-            <div class="accordion unit-8" id="accordion">
-            <div class="accordion-item">
-              <h3 class="mb-0 heading">
-                <a class="btn-block" data-toggle="collapse" href="#collapseOne" role="button" aria-expanded="true" aria-controls="collapseOne">What is the name of your company<span class="icon"></span></a>
-              </h3>
-              <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                <div class="body-text">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur quae cumque perspiciatis aperiam accusantium facilis provident aspernatur nisi optio debitis dolorum, est eum eligendi vero aut ad necessitatibus nulla sit labore doloremque magnam! Ex molestiae, dolor tempora, ad fuga minima enim mollitia consequuntur, necessitatibus praesentium eligendi officia recusandae culpa tempore eaque quasi ullam magnam modi quidem in amet. Quod debitis error placeat, tempore quasi aliquid eaque vel facilis culpa voluptate.</p>
-                </div>
-              </div>
-            </div> <!-- .accordion-item -->
-
-            <div class="accordion-item">
-              <h3 class="mb-0 heading">
-                <a class="btn-block" data-toggle="collapse" href="#collapseTwo" role="button" aria-expanded="false" aria-controls="collapseTwo">How much pay for 3  months?<span class="icon"></span></a>
-              </h3>
-              <div id="collapseTwo" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                <div class="body-text">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel ad laborum expedita. Nostrum iure atque enim quisquam minima distinctio omnis, consequatur aliquam suscipit, quidem, esse aspernatur! Libero, excepturi animi repellendus porro impedit nihil in doloremque a quaerat enim voluptatum, perspiciatis, quas dignissimos maxime ut cum reiciendis eius dolorum voluptatem aliquam!</p>
-                </div>
-              </div>
-            </div> <!-- .accordion-item -->
-
-            <div class="accordion-item">
-              <h3 class="mb-0 heading">
-                <a class="btn-block" data-toggle="collapse" href="#collapseThree" role="button" aria-expanded="false" aria-controls="collapseThree">Do I need to register?  <span class="icon"></span></a>
-              </h3>
-              <div id="collapseThree" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                <div class="body-text">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel ad laborum expedita. Nostrum iure atque enim quisquam minima distinctio omnis, consequatur aliquam suscipit, quidem, esse aspernatur! Libero, excepturi animi repellendus porro impedit nihil in doloremque a quaerat enim voluptatum, perspiciatis, quas dignissimos maxime ut cum reiciendis eius dolorum voluptatem aliquam!</p>
-                </div>
-              </div>
-            </div> <!-- .accordion-item -->
-
-            <div class="accordion-item">
-              <h3 class="mb-0 heading">
-                <a class="btn-block" data-toggle="collapse" href="#collapseFour" role="button" aria-expanded="false" aria-controls="collapseFour">Who should I contact in case of support.<span class="icon"></span></a>
-              </h3>
-              <div id="collapseFour" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                <div class="body-text">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel ad laborum expedita. Nostrum iure atque enim quisquam minima distinctio omnis, consequatur aliquam suscipit, quidem, esse aspernatur! Libero, excepturi animi repellendus porro impedit nihil in doloremque a quaerat enim voluptatum, perspiciatis, quas dignissimos maxime ut cum reiciendis eius dolorum voluptatem aliquam!</p>
-                </div>
-              </div>
-            </div> <!-- .accordion-item -->
-
-          </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
     <!-- footer -->
     <footerApp></footerApp>
     </div>
@@ -134,14 +185,56 @@
 </template>
 
 <script>
+    import Swal from 'sweetalert2'
     import headerApp from './layout/header'
     import footerApp from './layout/footer'
     export default {
     components:{
     headerApp,
     footerApp
-    }
+    },
+  data() {
+      return {
+          job:{},
+      }
+  },
+  mounted() {
+        axios.get(`/showjob/${this.$route.params.name}`).then((result) => {
+                this.job = result.data;
+        });
+    },
+       methods: {
+            message(place,logo,topic,btn,time){
+            Swal.fire({
+            position: place,
+            icon: logo,
+            title: topic,
+            showConfirmButton: btn,
+            timer: time
+            })
+            },
+            deletePost()
+            {
 
+            },
+         post()
+          {
+            const formData = new FormData();
+            formData.append('salary_range',this.job.salary_range);
+            formData.append('job_title',this.job.job_title);
+            formData.append('company', this.job.company);
+            formData.append('location', this.job.location);
+            formData.append('job_type', this.job.job_type);
+            formData.append('description', this.job.description);
+            formData.append('requirements', this.job.requirements);
+            formData.append('_method', 'PUT');
+            axios.post(`/updatejob/${this.$route.params.name}`, formData).then((res) => {
+            this.message('top-end','success',res.data.message,false,1500);
+            })
+
+          }
+
+      }
     }
     </script>
 

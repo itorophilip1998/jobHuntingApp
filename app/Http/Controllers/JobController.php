@@ -12,17 +12,11 @@ class JobController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
-        $jobs = Job::all();
-
-        $response = [
-            'success' => true,
-            'jobs' => $jobs,
-            'message' => 'jobs retrieved successfully!'
-        ];
-
-        return response()->json($response, 200);
+        $jobs = Job::latest()->get();
+        return response()->json($jobs, 200);
     }
 
     /**
@@ -32,16 +26,15 @@ class JobController extends Controller
      */
     public function create(Request $request)
     {
-        $this->validate($request,[
-            'job_title' => 'required|string',
-            'company' => 'required|string',
-            'job_type' => 'required|string',
-            'location' => 'required|string',
-            'description' => 'required|text',
-            'requirements' => 'required|string',
-            'salary_range' => 'required|string',
-        ]);
-
+        // $request->validate([
+        //     'job_title' => 'required|string',
+        //     'company' => 'required|string',
+        //     'job_type' => 'required|string',
+        //     'location' => 'required|string',
+        //     'description' => 'required|text',
+        //     'requirements' => 'required|string',
+        //     'salary_range' => 'required|string',
+        // ]);
         $job = new Job;
         $job->job_title = $request->input('job_title');
         $job->company = $request->input('company');
@@ -53,7 +46,7 @@ class JobController extends Controller
         $job->save();
 
         return response()->json([
-            "message" => "new job created",
+            "message" => "New job created",
         ], 201);
 
     }
@@ -75,23 +68,10 @@ class JobController extends Controller
      * @param  \App\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function show(Job $job, $id)
+    public function show($id)
     {
         $job = Job::find($id);
-        if (is_null($job)) {
-            $response = [
-                'success' => false,
-                'message' => 'Job not found.'
-            ];
-            return response()->json($response, 404);
-        }
-
-        $response = [
-            'success' => true,
-            'message' => 'Job retrieved successfully.'
-        ];
-
-        return response()->json($response, 200);
+        return response()->json($job, 200);
     }
 
     /**
@@ -126,20 +106,19 @@ class JobController extends Controller
      * @param  \App\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Job $job)
+    public function update(Request $request,$job)
     {
-        $this->validate($request,[
-            'job_title' => 'required|string',
-            'company' => 'required|string',
-            'job_type' => 'required|string',
-            'location' => 'required|string',
-            'description' => 'required|text',
-            'requirements' => 'required|string',
-            'salary_range' => 'required|string',
-
-        ]);
-
-        $job = new Job;
+        // dd($request->all());
+        // $this->validate($request,[
+        //     'job_title' => 'required|string',
+        //     'company' => 'required|string',
+        //     'job_type' => 'required|string',
+        //     'location' => 'required|string',
+        //     'description' => 'required|text',
+        //     'requirements' => 'required|string',
+        //     'salary_range' => 'required|string',
+        // ]);
+        $job = Job::find($job);
         $job->job_title = $request->input('job_title');
         $job->company = $request->input('company');
         $job->job_type = $request->input('job_type');
@@ -147,11 +126,12 @@ class JobController extends Controller
         $job->description = $request->input('description');
         $job->requirements = $request->input('requirements');
         $job->salary_range = $request->input('salary_range');
-        $job->update();
+        $job->save();
 
         return response()->json([
-            "message" => "new job created",
-        ], 201);
+            "message" => "job updated",
+            $job
+        ], 200);
     }
 
     /**
@@ -160,13 +140,12 @@ class JobController extends Controller
      * @param  \App\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Job $job, $id)
+    public function destroy($id)
     {
         $job = Job::find($id);
-        $job->delete();
-
+        $job->delete(); 
         return response()->json([
             "message" => "job deleted",
-        ], 202);
+        ], 200);
     }
 }
