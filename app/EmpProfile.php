@@ -5,9 +5,9 @@ namespace App;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
-class Profile extends Model
+class EmpProfile extends Model
 {
     public function user(){
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 }

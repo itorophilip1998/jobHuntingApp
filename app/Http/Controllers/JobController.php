@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Job;
+use Input;
+use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -35,7 +37,8 @@ class JobController extends Controller
      */
     public function create(Request $request)
     {
-        $this->validate($request,[
+        $validator = Validator::make(request()->all(),
+        array(
             'job_title' => 'required|string',
             'company' => 'required|string',
             'job_type' => 'required|string',
@@ -44,7 +47,7 @@ class JobController extends Controller
             'requirements' => 'required|string',
             'salary_range' => 'required|string',
 
-        ]);
+        ));
 
         $job = new Job;
         $job->job_title = $request->input('job_title');
@@ -54,6 +57,7 @@ class JobController extends Controller
         $job->description = $request->input('description');
         $job->requirements = $request->input('requirements');
         $job->salary_range = $request->input('salary_range');
+        $job->user_id = Auth::user()->id;
         $job->save();
 
         return response()->json([
@@ -151,10 +155,11 @@ class JobController extends Controller
         $job->description = $request->input('description');
         $job->requirements = $request->input('requirements');
         $job->salary_range = $request->input('salary_range');
+        $job->user_id = Auth::user()->id;
         $job->update();
 
         return response()->json([
-            "message" => "new job created",
+            "message" => "job updated",
         ], 201);
     }
 
