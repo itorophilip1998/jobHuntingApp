@@ -19,7 +19,7 @@
 
 
 
-            <div class="p-5 bg-white">
+            <div class="p-5 bg-white shadow-sm ">
 
               <div class="mb-4 mb-md-5 mr-5">
                <div class="job-post-item-header d-flex align-items-center">
@@ -58,12 +58,14 @@
 
               <p class="mt-5">
                   <!-- seekers console -->
-                    <a href="#" class="btn btn-primary shadow py-2 px-4" data-toggle="modal" data-target="#seekers" >Apply Job</a>    <!-- Modal -->
-                               <div class="modal fade" id="seekers" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                    <a v-if="user.role=='jobseeker'" href="#" class="btn btn-primary shadow py-2 px-4"  data-toggle="modal" data-target='#qseekers'>Apply Job</a>
+                    <a v-if="user.role !='jobseeker'" href="#" class="btn btn-primary shadow py-2 px-4"  data-toggle="modal" data-target='#nseekers'>Apply Job</a>
+                        <!-- qualify seekers-->
+                    <div class="modal fade" id="qseekers" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
                                    <div class="modal-dialog" role="document">
                                        <div class="modal-content">
                                            <div class="modal-header">
-                                               <h5 class="modal-title">Modal title</h5>
+                                               <h5 class="modal-title">Apply Job</h5>
                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                        <span aria-hidden="true">&times;</span>
                                                    </button>
@@ -77,13 +79,26 @@
                                            </div>
                                        </div>
                                    </div>
-                               </div>
+                      </div>
+                        <!--not qualify seekers-->
+                    <div class="modal fade" id="nseekers" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                                   <div class="modal-dialog modal-sm" role="document">
+                                       <div class="modal-content">
+                                           <div class="modal-body ">
+                                               <h5 class="modal-title p-1">Please login before you apply</h5>
+                                               <a href="#footer" class="btn btn-primary shadow btn-sm">Ok</a>
+                                               <a class="btn shadow btn-sm" data-dismiss="modal"  >Close</a>
+                                           </div>
+                                       </div>
+                                   </div>
+                      </div>
+
 
               <!-- employers console-->
-              <a href="#" class="btn shadow py-2 px-4" data-toggle="modal" data-target="#employers" >Edit</a>
-              <a href="#" class="btn btn-primary  shadow py-2 px-4">Delete</a>
+              <!-- <button   class="btn shadow py-2 px-4" data-toggle="modal" data-target="#employers" >Edit</button>
+              <button @click="deletePost()" type="button"   class="btn btn-primary  shadow py-2 px-4">Delete</button> -->
               <!-- Modal -->
-              <div class="modal fade" id="employers" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+              <!-- <div class="modal fade" id="employers" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
                   <div class="modal-dialog shadow" role="document">
                       <div class="modal-content">
                           <div class="modal-header">
@@ -157,18 +172,18 @@
             </form>
              </div>
                 <div class="modal-footer">
-                    <button @click="deletePost()"  type="button" class="btn shadow btn-secondary" data-dismiss="modal">Close</button>
+                    <button   type="button" class="btn shadow btn-secondary" data-dismiss="modal">Close</button>
                     <button @click="post()"  type="button" class="btn shadow btn-primary">Update</button>
                 </div>
                       </div>
                   </div>
-              </div>
+              </div> -->
             </p>
             </div>
           </div>
 
           <div class="col-lg-4">
-            <div class="p-4 mb-3 bg-white">
+            <div class="p-4 mb-3 bg-white shadow-sm ">
               <h3 class="h5 text-black mb-3">More Info</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa ad iure porro mollitia architecto hic consequuntur. Distinctio nisi perferendis dolore, ipsa consectetur</p>
               <p><a href="#" class="btn btn-primary  py-2 px-4">learn more</a></p>
@@ -178,7 +193,7 @@
       </div>
     </div>
     <!-- footer -->
-    <footerApp></footerApp>
+    <footerApp id="footer"></footerApp>
     </div>
 
     </div>
@@ -196,12 +211,17 @@
   data() {
       return {
           job:{},
+          user:{},
+          
       }
   },
   mounted() {
         axios.get(`/showjob/${this.$route.params.name}`).then((result) => {
                 this.job = result.data;
         });
+       axios.get('/user').then((res) => {
+                 this.user = res.data
+       });
     },
        methods: {
             message(place,logo,topic,btn,time){
@@ -215,7 +235,10 @@
             },
             deletePost()
             {
-
+              axios.delete(`/deletejob/${this.$route.params.name}`).then((res) => {
+                 this.message('top-end','success',res.data.message,false,1500);
+                 this.$router.push(`/jobs`);
+                })
             },
          post()
           {

@@ -12991,6 +12991,11 @@ a:hover {
   color: #ccc;
 }
 
+.pagination li a {
+  border-radius: 30px !important;
+  margin: 0 2px;
+}
+
 .overlay2 {
   width: 100%;
   height: 110vh;

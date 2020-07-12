@@ -7,6 +7,10 @@
                 <br><br><br> <br><br> <br>
 
               <div class="container  text-center" style="z-index: 1 !important;" >
+                <!-- search -->
+                <i style="left: -30px;bottom: -34px;position: relative;" class="fa fa-search" aria-hidden="true"></i>
+                <input class="form-control rounded-pill pr-5 mx-0 mx-md-5"  type="text" placeholder="Type a name" v-model="search" />
+
                 <h2 class="mb-0 brand">Available Jobs</h2>
                 <p class="mb-0 unit-6"><router-link to="/" class="text-info">Home</router-link> / <span>Jobs</span></p>
               </div>
@@ -19,6 +23,7 @@
                     <span class="text-gray-500">Job type</span>
                     <h2 class="font-weight-bold text-black">{{selected}}</h2>
                   </div>
+
                   <div class="col-md-3" data-aos="fade" data-aos-delay="200">
                     <div class="select-wrap mr-auto">
                       <span class="icon-keyboard_arrow_down arrow-down"></span>
@@ -35,7 +40,7 @@
 
               <!--all data -->
                 <div class="alldata">
-                    <div class="row" data-aos="fade" v-for="getjob in getjobs" :key="getjob.id" @click="singleJob(getjob)" style="cursor: pointer;">
+                    <div class="row" data-aos="fade" v-for="getjob in getjobs.data" :key="getjob.id" @click="singleJob(getjob)" style="cursor: pointer;">
                         <div class="col-md-12">
                           <div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
                              <div class="mb-4 mb-md-0 mr-5">
@@ -43,7 +48,7 @@
                                 <h2 class="mr-3 text-dark h4"> <b>{{getjob.job_title}}</b> </h2>
                                 <div class="badge-wrap">
                                  <span
-                                 :class="` text-white
+                                 :class="`text-white
                                  ${(getjob.job_type=='Full Time') ? 'bg-danger': '' }
                                    ${(getjob.job_type=='Freelance') ? 'bg-info': '' }
                                   ${(getjob.job_type=='PartTime') ? 'bg-warning text-dark  ': '' }
@@ -70,21 +75,12 @@
                 </div>
 
                 <!-- pagination -->
-                <div class="row mt-5">
-                  <div class="col-md-12 text-center">
-                    <div class="site-block-27">
-                      <ul>
-                        <li><a href="#"><i class="icon-keyboard_arrow_left h5"></i></a></li>
-                        <li class="active"><span>1</span></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#"><i class="icon-keyboard_arrow_right h5"></i></a></li>
-                      </ul>
-                    </div>
+               <div class="row mt-5">
+                  <div class="text-center col-md-12">
+                    <pagination  :data="getjobs" @pagination-change-page="loadJobs"></pagination>
                   </div>
                 </div>
+
 
 
               </div>
@@ -96,35 +92,43 @@
 
         </div>
     </template>
-
   <script>
     import headerApp from './layout/header'
     import footerApp from './layout/footer'
     export default {
     components:{
     headerApp,
-    footerApp
+    footerApp,
     },
     data() {
         return {
             getjobs:{},
             selected:"Choose job type",
+            search: "",
+
         }
     },
     mounted() {
-        axios.get('/getjobs').then(res => {
-                this.getjobs = res.data
-            });
+        this.loadJobs();
     },
     methods: {
         singleJob(getjob)
         {
-            this.$router.push(`/job/${getjob.id}`);
-        }
+          this.$router.push(`/job/${getjob.id}`);
+        },
+       loadJobs(page=1) {
+        axios.get('/getjobs?page=' + page)
+                .then((res) => {
+                 this.getjobs = res.data
+       });
     },
-    computed: {
-
-
-    },
-    }
-    </script>
+},
+computed: {
+ filteredBlogs() {
+    return this.jobs.filter((item)=>{
+    return item.job_title.match(this.search)
+})
+  },
+ }
+}
+</script>

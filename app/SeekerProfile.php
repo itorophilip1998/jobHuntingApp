@@ -2,10 +2,10 @@
 
 namespace App;
 
-use App\User;
 use Illuminate\Database\Eloquent\Model;
+use App\User;
 
-class Job extends Model
+class SeekerProfile extends Model
 {
     public function user(){
         $this->belongsTo(User::class);

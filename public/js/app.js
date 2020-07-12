@@ -2567,298 +2567,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     headerApp: _layout_header__WEBPACK_IMPORTED_MODULE_0__["default"],
     footerApp: _layout_footer__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      getjobs: {},
+      selected: "Choose job type",
+      search: ""
+    };
+  },
+  mounted: function mounted() {
+    this.loadJobs();
+  },
+  methods: {
+    singleJob: function singleJob(getjob) {
+      this.$router.push("/job/".concat(getjob.id));
+    },
+    loadJobs: function loadJobs() {
+      var _this = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get('/getjobs?page=' + page).then(function (res) {
+        _this.getjobs = res.data;
+      });
+    }
   }
 });
 
@@ -3063,6 +2800,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3073,7 +2825,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      job: {}
+      job: {},
+      user: {}
     };
   },
   mounted: function mounted() {
@@ -3081,6 +2834,9 @@ __webpack_require__.r(__webpack_exports__);
 
     axios.get("/showjob/".concat(this.$route.params.name)).then(function (result) {
       _this.job = result.data;
+    });
+    axios.get('/user').then(function (res) {
+      _this.user = res.data;
     });
   },
   methods: {
@@ -3093,9 +2849,17 @@ __webpack_require__.r(__webpack_exports__);
         timer: time
       });
     },
-    deletePost: function deletePost() {},
-    post: function post() {
+    deletePost: function deletePost() {
       var _this2 = this;
+
+      axios["delete"]("/deletejob/".concat(this.$route.params.name)).then(function (res) {
+        _this2.message('top-end', 'success', res.data.message, false, 1500);
+
+        _this2.$router.push("/jobs");
+      });
+    },
+    post: function post() {
+      var _this3 = this;
 
       var formData = new FormData();
       formData.append('salary_range', this.job.salary_range);
@@ -3107,7 +2871,7 @@ __webpack_require__.r(__webpack_exports__);
       formData.append('requirements', this.job.requirements);
       formData.append('_method', 'PUT');
       axios.post("/updatejob/".concat(this.$route.params.name), formData).then(function (res) {
-        _this2.message('top-end', 'success', res.data.message, false, 1500);
+        _this3.message('top-end', 'success', res.data.message, false, 1500);
       });
     }
   }
@@ -3220,11 +2984,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3235,22 +2994,225 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       getjobs: {},
-      selected: "Choose job type"
+      selected: "Choose job type",
+      search: ""
+    };
+  },
+  mounted: function mounted() {
+    this.loadJobs();
+  },
+  methods: {
+    singleJob: function singleJob(getjob) {
+      this.$router.push("/job/".concat(getjob.id));
+    },
+    loadJobs: function loadJobs() {
+      var _this = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get('/getjobs?page=' + page).then(function (res) {
+        _this.getjobs = res.data;
+      });
+    }
+  },
+  computed: {
+    filteredBlogs: function filteredBlogs() {
+      var _this2 = this;
+
+      return this.jobs.filter(function (item) {
+        return item.job_title.match(_this2.search);
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/layout/footer.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/layout/footer.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      user: {},
+      loginEmail: '',
+      loginPassword: '',
+      name: '',
+      email: '',
+      password: '',
+      role: ''
     };
   },
   mounted: function mounted() {
     var _this = this;
 
-    axios.get('/getjobs').then(function (res) {
-      _this.getjobs = res.data;
+    axios.get('/user').then(function (res) {
+      _this.user = res.data;
     });
   },
   methods: {
-    singleJob: function singleJob(getjob) {
-      this.$router.push("/job/".concat(getjob.id));
+    message: function message(place, logo, topic, btn, time) {
+      sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire({
+        position: place,
+        icon: logo,
+        title: topic,
+        showConfirmButton: btn,
+        timer: time
+      });
+    },
+    logout: function logout() {
+      var _this2 = this;
+
+      axios.post('/logout').then(function (res) {
+        _this2.message('top-end', 'success', 'logout successfully', false, 1500);
+      });
+    },
+    login: function login() {
+      var _this3 = this;
+
+      var formData = new FormData();
+      formData.append('email', this.loginEmail);
+      formData.append('password', this.loginPassword);
+      axios.post('/login', formData).then(function (res) {
+        _this3.message('top-end', 'success', 'login successfully', false, 1500);
+      })["catch"](function (err) {
+        _this3.message('top-end', 'error', 'incorrect login details', false, 1500);
+      });
+    },
+    signup: function signup() {
+      var _this4 = this;
+
+      var formData = new FormData();
+      formData.append('email', this.email);
+      formData.append('name', this.name);
+      formData.append('password', this.password);
+      formData.append('role', this.role);
+      axios.post('/register', formData).then(function (res) {
+        _this4.message('top-end', 'success', 'Signup successfully', false, 1500);
+      })["catch"](function (err) {
+        _this4.message('top-end', 'error', err.data, false, 1500);
+      });
     }
-  },
-  computed: {}
+  }
 });
 
 /***/ }),
@@ -3264,16 +3226,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -3558,6 +3510,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3574,7 +3532,8 @@ __webpack_require__.r(__webpack_exports__);
       job_type: '',
       location: '',
       description: '',
-      requirements: ''
+      requirements: '',
+      company_email: ''
     };
   },
   methods: {
@@ -3613,6 +3572,7 @@ __webpack_require__.r(__webpack_exports__);
       formData.append('job_type', this.job_type);
       formData.append('description', this.description);
       formData.append('requirements', this.requirements);
+      formData.append('company_email', this.company_email);
       axios.post('/postjob', formData).then(function (res) {
         _this.message('top-end', 'success', res.data.message, false, 1500);
       });
@@ -44726,11 +44686,148 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm._m(1),
+      _c("div", { staticClass: "site-section bg-light" }, [
+        _c("br", { staticClass: "d-block  d-md-none  " }),
+        _vm._v(" "),
+        _c("br", { staticClass: " d-block  d-md-none" }),
+        _vm._v(" "),
+        _c("br", { staticClass: "d-block  d-md-none" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "container" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "alldata" },
+            _vm._l(_vm.getjobs.data, function(getjob) {
+              return _c(
+                "div",
+                {
+                  key: getjob.id,
+                  staticClass: "row",
+                  staticStyle: { cursor: "pointer" },
+                  attrs: { "data-aos": "fade" },
+                  on: {
+                    click: function($event) {
+                      return _vm.singleJob(getjob)
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "job-post-item bg-white p-4 d-block d-md-flex align-items-center"
+                      },
+                      [
+                        _c("div", { staticClass: "mb-4 mb-md-0 mr-5" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "job-post-item-header d-flex align-items-center"
+                            },
+                            [
+                              _c("h2", { staticClass: "mr-3 text-dark h4" }, [
+                                _c("b", [_vm._v(_vm._s(getjob.job_title))])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "badge-wrap" }, [
+                                _c(
+                                  "span",
+                                  {
+                                    class:
+                                      "text-white\n                                " +
+                                      (getjob.job_type == "Full Time"
+                                        ? "bg-danger"
+                                        : "") +
+                                      "\n                                  " +
+                                      (getjob.job_type == "Freelance"
+                                        ? "bg-info"
+                                        : "") +
+                                      "\n                                 " +
+                                      (getjob.job_type == "PartTime"
+                                        ? "bg-warning text-dark  "
+                                        : "") +
+                                      "\n                                " +
+                                      (getjob.job_type == "Internship"
+                                        ? "bg-secondary"
+                                        : "") +
+                                      "\n                                " +
+                                      (getjob.job_type == "Termporary"
+                                        ? "bg-success"
+                                        : "") +
+                                      "\n                                " +
+                                      (getjob.job_type == "Freelance"
+                                        ? "bg-secondary"
+                                        : "") +
+                                      "\n                                badge py-2 px-4"
+                                  },
+                                  [_vm._v(_vm._s(getjob.job_type) + " ")]
+                                )
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "job-post-item-body d-block d-md-flex"
+                            },
+                            [
+                              _c("div", { staticClass: "mr-3" }, [
+                                _c("span", {
+                                  staticClass: "fl-bigmug-line-portfolio23"
+                                }),
+                                _vm._v(" "),
+                                _c("a", { attrs: { href: "#" } }, [
+                                  _vm._v(_vm._s(getjob.company))
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", [
+                                _c("span", {
+                                  staticClass: "fl-bigmug-line-big104"
+                                }),
+                                _vm._v(" "),
+                                _c("span", [_vm._v(_vm._s(getjob.location))])
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(2, true)
+                      ]
+                    )
+                  ])
+                ]
+              )
+            }),
+            0
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "row mt-5" }, [
+            _c(
+              "div",
+              { staticClass: "text-center col-md-12" },
+              [
+                _c("pagination", {
+                  attrs: { data: _vm.getjobs },
+                  on: { "pagination-change-page": _vm.loadJobs }
+                })
+              ],
+              1
+            )
+          ])
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "site-section" }, [
         _c("div", { staticClass: "container" }, [
-          _vm._m(2),
+          _vm._m(3),
           _vm._v(" "),
           _c("div", { staticClass: "row hosting" }, [
             _c(
@@ -44785,7 +44882,7 @@ var render = function() {
                     ]
                   ),
                   _vm._v(" "),
-                  _vm._m(3)
+                  _vm._m(4)
                 ])
               ]
             ),
@@ -44841,7 +44938,7 @@ var render = function() {
                     ]
                   ),
                   _vm._v(" "),
-                  _vm._m(4)
+                  _vm._m(5)
                 ])
               ]
             ),
@@ -44896,7 +44993,7 @@ var render = function() {
                     ]
                   ),
                   _vm._v(" "),
-                  _vm._m(5)
+                  _vm._m(6)
                 ])
               ]
             ),
@@ -44952,7 +45049,7 @@ var render = function() {
                     ]
                   ),
                   _vm._v(" "),
-                  _vm._m(6)
+                  _vm._m(7)
                 ])
               ]
             ),
@@ -45009,7 +45106,7 @@ var render = function() {
                     ]
                   ),
                   _vm._v(" "),
-                  _vm._m(7)
+                  _vm._m(8)
                 ])
               ]
             ),
@@ -45065,7 +45162,7 @@ var render = function() {
                     ]
                   ),
                   _vm._v(" "),
-                  _vm._m(8)
+                  _vm._m(9)
                 ])
               ]
             )
@@ -45073,7 +45170,7 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm._m(9),
+      _vm._m(10),
       _vm._v(" "),
       _c("footerApp")
     ],
@@ -45394,1042 +45491,56 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "site-section bg-light" }, [
-      _c("br", { staticClass: "d-block  d-md-none  " }),
+    return _c(
+      "div",
+      { staticClass: "row justify-content-start text-left mb-5" },
+      [
+        _c("div", { staticClass: "col-md-9", attrs: { "data-aos": "fade" } }, [
+          _c("h2", { staticClass: "font-weight-bold text-black" }, [
+            _vm._v("Recent Jobs")
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "col-md-3",
+            attrs: { "data-aos": "fade", "data-aos-delay": "200" }
+          },
+          [
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-primary py-3 shadow btn-block",
+                attrs: { href: "#" }
+              },
+              [
+                _c("span", { staticClass: "h5" }, [_vm._v("+")]),
+                _vm._v(" Post a Job")
+              ]
+            )
+          ]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ml-auto" }, [
+      _c(
+        "a",
+        {
+          staticClass:
+            "btn btn-secondary rounded-circle btn-favorite text-gray-500",
+          attrs: { href: "#" }
+        },
+        [_c("span", { staticClass: "icon-heart" })]
+      ),
       _vm._v(" "),
-      _c("br", { staticClass: " d-block  d-md-none" }),
-      _vm._v(" "),
-      _c("br", { staticClass: "d-block  d-md-none" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "container" }, [
-        _c("div", { staticClass: "row justify-content-start text-left mb-5" }, [
-          _c(
-            "div",
-            { staticClass: "col-md-9", attrs: { "data-aos": "fade" } },
-            [
-              _c("h2", { staticClass: "font-weight-bold text-black" }, [
-                _vm._v("Recent Jobs")
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "col-md-3",
-              attrs: { "data-aos": "fade", "data-aos-delay": "200" }
-            },
-            [
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-primary py-3 shadow btn-block",
-                  attrs: { href: "#" }
-                },
-                [
-                  _c("span", { staticClass: "h5" }, [_vm._v("+")]),
-                  _vm._v(" Post a Job")
-                ]
-              )
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row", attrs: { "data-aos": "fade" } }, [
-          _c("div", { staticClass: "col-md-12" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "job-post-item bg-white p-4 d-block d-md-flex align-items-center"
-              },
-              [
-                _c("div", { staticClass: "mb-4 mb-md-0 mr-5" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "job-post-item-header d-flex align-items-center"
-                    },
-                    [
-                      _c("h2", { staticClass: "mr-3 text-black h4" }, [
-                        _vm._v("Frontend Development")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "badge-wrap" }, [
-                        _c(
-                          "span",
-                          {
-                            staticClass: "bg-primary text-white badge py-2 px-4"
-                          },
-                          [_vm._v("Partime")]
-                        )
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "job-post-item-body d-block d-md-flex" },
-                    [
-                      _c("div", { staticClass: "mr-3" }, [
-                        _c("span", {
-                          staticClass: "fl-bigmug-line-portfolio23"
-                        }),
-                        _vm._v(" "),
-                        _c("a", { attrs: { href: "#" } }, [
-                          _vm._v("Facebook, Inc.")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", [
-                        _c("span", { staticClass: "fl-bigmug-line-big104" }),
-                        _vm._v(" "),
-                        _c("span", [_vm._v("New York City, USA")])
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "ml-auto" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass:
-                        "btn btn-secondary rounded-circle btn-favorite text-gray-500",
-                      attrs: { href: "#" }
-                    },
-                    [_c("span", { staticClass: "icon-heart" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-primary py-2",
-                      attrs: { href: "job-single.html" }
-                    },
-                    [_vm._v("Apply Job")]
-                  )
-                ])
-              ]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row", attrs: { "data-aos": "fade" } }, [
-          _c("div", { staticClass: "col-md-12" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "job-post-item bg-white p-4 d-block d-md-flex align-items-center"
-              },
-              [
-                _c("div", { staticClass: "mb-4 mb-md-0 mr-5" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "job-post-item-header d-flex align-items-center"
-                    },
-                    [
-                      _c("h2", { staticClass: "mr-3 text-black h4" }, [
-                        _vm._v("Full Stack Developer")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "badge-wrap" }, [
-                        _c(
-                          "span",
-                          {
-                            staticClass: "bg-warning text-white badge py-2 px-4"
-                          },
-                          [_vm._v("Full Time")]
-                        )
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "job-post-item-body d-block d-md-flex" },
-                    [
-                      _c("div", { staticClass: "mr-3" }, [
-                        _c("span", {
-                          staticClass: "fl-bigmug-line-portfolio23"
-                        }),
-                        _vm._v(" "),
-                        _c("a", { attrs: { href: "#" } }, [
-                          _vm._v("Google, Inc.")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", [
-                        _c("span", { staticClass: "fl-bigmug-line-big104" }),
-                        _vm._v(" "),
-                        _c("span", [_vm._v("New York City, USA")])
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "ml-auto" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass:
-                        "btn btn-danger rounded-circle btn-favorite active",
-                      attrs: { href: "#" }
-                    },
-                    [_c("span", { staticClass: "icon-heart" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-primary py-2",
-                      attrs: { href: "job-single.html" }
-                    },
-                    [_vm._v("Apply Job")]
-                  )
-                ])
-              ]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row", attrs: { "data-aos": "fade" } }, [
-          _c("div", { staticClass: "col-md-12" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "job-post-item bg-white p-4 d-block d-md-flex align-items-center"
-              },
-              [
-                _c("div", { staticClass: "mb-4 mb-md-0 mr-5" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "job-post-item-header d-flex align-items-center"
-                    },
-                    [
-                      _c("h2", { staticClass: "mr-3 text-black h4" }, [
-                        _vm._v("Open Source Interactive Developer")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "badge-wrap" }, [
-                        _c(
-                          "span",
-                          { staticClass: "bg-info text-white badge py-2 px-4" },
-                          [_vm._v("Freelance")]
-                        )
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "job-post-item-body d-block d-md-flex" },
-                    [
-                      _c("div", { staticClass: "mr-3" }, [
-                        _c("span", {
-                          staticClass: "fl-bigmug-line-portfolio23"
-                        }),
-                        _vm._v(" "),
-                        _c("a", { attrs: { href: "#" } }, [
-                          _vm._v("New York Times")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", [
-                        _c("span", { staticClass: "fl-bigmug-line-big104" }),
-                        _vm._v(" "),
-                        _c("span", [_vm._v("New York City, USA")])
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "ml-auto" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass:
-                        "btn btn-secondary rounded-circle btn-favorite text-gray-500",
-                      attrs: { href: "#" }
-                    },
-                    [_c("span", { staticClass: "icon-heart" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-primary py-2",
-                      attrs: { href: "job-single.html" }
-                    },
-                    [_vm._v("Apply Job")]
-                  )
-                ])
-              ]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row", attrs: { "data-aos": "fade" } }, [
-          _c("div", { staticClass: "col-md-12" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "job-post-item bg-white p-4 d-block d-md-flex align-items-center"
-              },
-              [
-                _c("div", { staticClass: "mb-4 mb-md-0 mr-5" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "job-post-item-header d-flex align-items-center"
-                    },
-                    [
-                      _c("h2", { staticClass: "mr-3 text-black h4" }, [
-                        _vm._v("Frontend Development")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "badge-wrap" }, [
-                        _c(
-                          "span",
-                          {
-                            staticClass:
-                              "bg-secondary text-white badge py-2 px-4"
-                          },
-                          [_vm._v("Internship")]
-                        )
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "job-post-item-body d-block d-md-flex" },
-                    [
-                      _c("div", { staticClass: "mr-3" }, [
-                        _c("span", {
-                          staticClass: "fl-bigmug-line-portfolio23"
-                        }),
-                        _vm._v(" "),
-                        _c("a", { attrs: { href: "#" } }, [
-                          _vm._v("Facebook, Inc.")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", [
-                        _c("span", { staticClass: "fl-bigmug-line-big104" }),
-                        _vm._v(" "),
-                        _c("span", [_vm._v("New York City, USA")])
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "ml-auto" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass:
-                        "btn btn-secondary rounded-circle btn-favorite text-gray-500",
-                      attrs: { href: "#" }
-                    },
-                    [_c("span", { staticClass: "icon-heart" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-primary py-2",
-                      attrs: { href: "job-single.html" }
-                    },
-                    [_vm._v("Apply Job")]
-                  )
-                ])
-              ]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row", attrs: { "data-aos": "fade" } }, [
-          _c("div", { staticClass: "col-md-12" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "job-post-item bg-white p-4 d-block d-md-flex align-items-center"
-              },
-              [
-                _c("div", { staticClass: "mb-4 mb-md-0 mr-5" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "job-post-item-header d-flex align-items-center"
-                    },
-                    [
-                      _c("h2", { staticClass: "mr-3 text-black h4" }, [
-                        _vm._v("Full Stack Developer")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "badge-wrap" }, [
-                        _c(
-                          "span",
-                          {
-                            staticClass: "bg-warning text-white badge py-2 px-4"
-                          },
-                          [_vm._v("Full Time")]
-                        )
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "job-post-item-body d-block d-md-flex" },
-                    [
-                      _c("div", { staticClass: "mr-3" }, [
-                        _c("span", {
-                          staticClass: "fl-bigmug-line-portfolio23"
-                        }),
-                        _vm._v(" "),
-                        _c("a", { attrs: { href: "#" } }, [
-                          _vm._v("Google, Inc.")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", [
-                        _c("span", { staticClass: "fl-bigmug-line-big104" }),
-                        _vm._v(" "),
-                        _c("span", [_vm._v("New York City, USA")])
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "ml-auto" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass:
-                        "btn btn-secondary rounded-circle btn-favorite text-gray-500",
-                      attrs: { href: "#" }
-                    },
-                    [_c("span", { staticClass: "icon-heart" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-primary py-2",
-                      attrs: { href: "job-single.html" }
-                    },
-                    [_vm._v("Apply Job")]
-                  )
-                ])
-              ]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row", attrs: { "data-aos": "fade" } }, [
-          _c("div", { staticClass: "col-md-12" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "job-post-item bg-white p-4 d-block d-md-flex align-items-center"
-              },
-              [
-                _c("div", { staticClass: "mb-4 mb-md-0 mr-5" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "job-post-item-header d-flex align-items-center"
-                    },
-                    [
-                      _c("h2", { staticClass: "mr-3 text-black h4" }, [
-                        _vm._v("Open Source Interactive Developer")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "badge-wrap" }, [
-                        _c(
-                          "span",
-                          {
-                            staticClass: "bg-danger text-white badge py-2 px-4"
-                          },
-                          [_vm._v("Temporary")]
-                        )
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "job-post-item-body d-block d-md-flex" },
-                    [
-                      _c("div", { staticClass: "mr-3" }, [
-                        _c("span", {
-                          staticClass: "fl-bigmug-line-portfolio23"
-                        }),
-                        _vm._v(" "),
-                        _c("a", { attrs: { href: "#" } }, [
-                          _vm._v("New York Times")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", [
-                        _c("span", { staticClass: "fl-bigmug-line-big104" }),
-                        _vm._v(" "),
-                        _c("span", [_vm._v("New York City, USA")])
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "ml-auto" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass:
-                        "btn btn-secondary rounded-circle btn-favorite text-gray-500",
-                      attrs: { href: "#" }
-                    },
-                    [_c("span", { staticClass: "icon-heart" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-primary py-2",
-                      attrs: { href: "job-single.html" }
-                    },
-                    [_vm._v("Apply Job")]
-                  )
-                ])
-              ]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row", attrs: { "data-aos": "fade" } }, [
-          _c("div", { staticClass: "col-md-12" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "job-post-item bg-white p-4 d-block d-md-flex align-items-center"
-              },
-              [
-                _c("div", { staticClass: "mb-4 mb-md-0 mr-5" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "job-post-item-header d-flex align-items-center"
-                    },
-                    [
-                      _c("h2", { staticClass: "mr-3 text-black h4" }, [
-                        _vm._v("Frontend Development")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "badge-wrap" }, [
-                        _c(
-                          "span",
-                          {
-                            staticClass: "bg-primary text-white badge py-2 px-4"
-                          },
-                          [_vm._v("Partime")]
-                        )
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "job-post-item-body d-block d-md-flex" },
-                    [
-                      _c("div", { staticClass: "mr-3" }, [
-                        _c("span", {
-                          staticClass: "fl-bigmug-line-portfolio23"
-                        }),
-                        _vm._v(" "),
-                        _c("a", { attrs: { href: "#" } }, [
-                          _vm._v("Facebook, Inc.")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", [
-                        _c("span", { staticClass: "fl-bigmug-line-big104" }),
-                        _vm._v(" "),
-                        _c("span", [_vm._v("New York City, USA")])
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "ml-auto" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass:
-                        "btn btn-secondary rounded-circle btn-favorite text-gray-500",
-                      attrs: { href: "#" }
-                    },
-                    [_c("span", { staticClass: "icon-heart" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-primary py-2",
-                      attrs: { href: "job-single.html" }
-                    },
-                    [_vm._v("Apply Job")]
-                  )
-                ])
-              ]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row", attrs: { "data-aos": "fade" } }, [
-          _c("div", { staticClass: "col-md-12" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "job-post-item bg-white p-4 d-block d-md-flex align-items-center"
-              },
-              [
-                _c("div", { staticClass: "mb-4 mb-md-0 mr-5" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "job-post-item-header d-flex align-items-center"
-                    },
-                    [
-                      _c("h2", { staticClass: "mr-3 text-black h4" }, [
-                        _vm._v("Full Stack Developer")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "badge-wrap" }, [
-                        _c(
-                          "span",
-                          {
-                            staticClass: "bg-warning text-white badge py-2 px-4"
-                          },
-                          [_vm._v("Full Time")]
-                        )
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "job-post-item-body d-block d-md-flex" },
-                    [
-                      _c("div", { staticClass: "mr-3" }, [
-                        _c("span", {
-                          staticClass: "fl-bigmug-line-portfolio23"
-                        }),
-                        _vm._v(" "),
-                        _c("a", { attrs: { href: "#" } }, [
-                          _vm._v("Google, Inc.")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", [
-                        _c("span", { staticClass: "fl-bigmug-line-big104" }),
-                        _vm._v(" "),
-                        _c("span", [_vm._v("New York City, USA")])
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "ml-auto" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass:
-                        "btn btn-secondary rounded-circle btn-favorite text-gray-500",
-                      attrs: { href: "#" }
-                    },
-                    [_c("span", { staticClass: "icon-heart" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-primary py-2",
-                      attrs: { href: "job-single.html" }
-                    },
-                    [_vm._v("Apply Job")]
-                  )
-                ])
-              ]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row", attrs: { "data-aos": "fade" } }, [
-          _c("div", { staticClass: "col-md-12" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "job-post-item bg-white p-4 d-block d-md-flex align-items-center"
-              },
-              [
-                _c("div", { staticClass: "mb-4 mb-md-0 mr-5" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "job-post-item-header d-flex align-items-center"
-                    },
-                    [
-                      _c("h2", { staticClass: "mr-3 text-black h4" }, [
-                        _vm._v("Open Source Interactive Developer")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "badge-wrap" }, [
-                        _c(
-                          "span",
-                          { staticClass: "bg-info text-white badge py-2 px-4" },
-                          [_vm._v("Freelance")]
-                        )
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "job-post-item-body d-block d-md-flex" },
-                    [
-                      _c("div", { staticClass: "mr-3" }, [
-                        _c("span", {
-                          staticClass: "fl-bigmug-line-portfolio23"
-                        }),
-                        _vm._v(" "),
-                        _c("a", { attrs: { href: "#" } }, [
-                          _vm._v("New York Times")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", [
-                        _c("span", { staticClass: "fl-bigmug-line-big104" }),
-                        _vm._v(" "),
-                        _c("span", [_vm._v("New York City, USA")])
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "ml-auto" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass:
-                        "btn btn-secondary rounded-circle btn-favorite text-gray-500",
-                      attrs: { href: "#" }
-                    },
-                    [_c("span", { staticClass: "icon-heart" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-primary py-2",
-                      attrs: { href: "job-single.html" }
-                    },
-                    [_vm._v("Apply Job")]
-                  )
-                ])
-              ]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row", attrs: { "data-aos": "fade" } }, [
-          _c("div", { staticClass: "col-md-12" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "job-post-item bg-white p-4 d-block d-md-flex align-items-center"
-              },
-              [
-                _c("div", { staticClass: "mb-4 mb-md-0 mr-5" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "job-post-item-header d-flex align-items-center"
-                    },
-                    [
-                      _c("h2", { staticClass: "mr-3 text-black h4" }, [
-                        _vm._v("Frontend Development")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "badge-wrap" }, [
-                        _c(
-                          "span",
-                          {
-                            staticClass:
-                              "bg-secondary text-white badge py-2 px-4"
-                          },
-                          [_vm._v("Internship")]
-                        )
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "job-post-item-body d-block d-md-flex" },
-                    [
-                      _c("div", { staticClass: "mr-3" }, [
-                        _c("span", {
-                          staticClass: "fl-bigmug-line-portfolio23"
-                        }),
-                        _vm._v(" "),
-                        _c("a", { attrs: { href: "#" } }, [
-                          _vm._v("Facebook, Inc.")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", [
-                        _c("span", { staticClass: "fl-bigmug-line-big104" }),
-                        _vm._v(" "),
-                        _c("span", [_vm._v("New York City, USA")])
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "ml-auto" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass:
-                        "btn btn-secondary rounded-circle btn-favorite text-gray-500",
-                      attrs: { href: "#" }
-                    },
-                    [_c("span", { staticClass: "icon-heart" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-primary py-2",
-                      attrs: { href: "job-single.html" }
-                    },
-                    [_vm._v("Apply Job")]
-                  )
-                ])
-              ]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row", attrs: { "data-aos": "fade" } }, [
-          _c("div", { staticClass: "col-md-12" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "job-post-item bg-white p-4 d-block d-md-flex align-items-center"
-              },
-              [
-                _c("div", { staticClass: "mb-4 mb-md-0 mr-5" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "job-post-item-header d-flex align-items-center"
-                    },
-                    [
-                      _c("h2", { staticClass: "mr-3 text-black h4" }, [
-                        _vm._v("Full Stack Developer")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "badge-wrap" }, [
-                        _c(
-                          "span",
-                          {
-                            staticClass: "bg-warning text-white badge py-2 px-4"
-                          },
-                          [_vm._v("Full Time")]
-                        )
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "job-post-item-body d-block d-md-flex" },
-                    [
-                      _c("div", { staticClass: "mr-3" }, [
-                        _c("span", {
-                          staticClass: "fl-bigmug-line-portfolio23"
-                        }),
-                        _vm._v(" "),
-                        _c("a", { attrs: { href: "#" } }, [
-                          _vm._v("Google, Inc.")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", [
-                        _c("span", { staticClass: "fl-bigmug-line-big104" }),
-                        _vm._v(" "),
-                        _c("span", [_vm._v("New York City, USA")])
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "ml-auto" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass:
-                        "btn btn-secondary rounded-circle btn-favorite text-gray-500",
-                      attrs: { href: "#" }
-                    },
-                    [_c("span", { staticClass: "icon-heart" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-primary py-2",
-                      attrs: { href: "job-single.html" }
-                    },
-                    [_vm._v("Apply Job")]
-                  )
-                ])
-              ]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row", attrs: { "data-aos": "fade" } }, [
-          _c("div", { staticClass: "col-md-12" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "job-post-item bg-white p-4 d-block d-md-flex align-items-center"
-              },
-              [
-                _c("div", { staticClass: "mb-4 mb-md-0 mr-5" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "job-post-item-header d-flex align-items-center"
-                    },
-                    [
-                      _c("h2", { staticClass: "mr-3 text-black h4" }, [
-                        _vm._v("Open Source Interactive Developer")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "badge-wrap" }, [
-                        _c(
-                          "span",
-                          {
-                            staticClass: "bg-danger text-white badge py-2 px-4"
-                          },
-                          [_vm._v("Temporary")]
-                        )
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "job-post-item-body d-block d-md-flex" },
-                    [
-                      _c("div", { staticClass: "mr-3" }, [
-                        _c("span", {
-                          staticClass: "fl-bigmug-line-portfolio23"
-                        }),
-                        _vm._v(" "),
-                        _c("a", { attrs: { href: "#" } }, [
-                          _vm._v("New York Times")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", [
-                        _c("span", { staticClass: "fl-bigmug-line-big104" }),
-                        _vm._v(" "),
-                        _c("span", [_vm._v("New York City, USA")])
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "ml-auto" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass:
-                        "btn btn-secondary rounded-circle btn-favorite text-gray-500",
-                      attrs: { href: "#" }
-                    },
-                    [_c("span", { staticClass: "icon-heart" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-primary py-2",
-                      attrs: { href: "job-single.html" }
-                    },
-                    [_vm._v("Apply Job")]
-                  )
-                ])
-              ]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row mt-5" }, [
-          _c("div", { staticClass: "col-md-12 text-center" }, [
-            _c("div", { staticClass: "site-block-27" }, [
-              _c("ul", [
-                _c("li", [
-                  _c("a", { attrs: { href: "#" } }, [
-                    _c("i", { staticClass: "icon-keyboard_arrow_left h5" })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "active" }, [
-                  _c("span", [_vm._v("1")])
-                ]),
-                _vm._v(" "),
-                _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("2")])]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("a", { attrs: { href: "#" } }, [
-                    _c("i", { staticClass: "icon-keyboard_arrow_right h5" })
-                  ])
-                ])
-              ])
-            ])
-          ])
-        ])
+      _c("a", { staticClass: "btn btn-primary py-2", attrs: { href: "#" } }, [
+        _vm._v("Apply Job")
       ])
     ])
   },
@@ -46811,7 +45922,7 @@ var render = function() {
           _c("div", { staticClass: "container" }, [
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-md-12 col-lg-8 mb-5" }, [
-                _c("div", { staticClass: "p-5 bg-white" }, [
+                _c("div", { staticClass: "p-5 bg-white shadow-sm " }, [
                   _c("div", { staticClass: "mb-4 mb-md-5 mr-5" }, [
                     _c(
                       "div",
@@ -46911,465 +46022,51 @@ var render = function() {
                   ),
                   _c("p"),
                   _vm._v(" "),
+                  _c("p", { staticClass: "mt-5" }, [
+                    _vm.user.role == "jobseeker"
+                      ? _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-primary shadow py-2 px-4",
+                            attrs: {
+                              href: "#",
+                              "data-toggle": "modal",
+                              "data-target": "#qseekers"
+                            }
+                          },
+                          [_vm._v("Apply Job")]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.user.role != "jobseeker"
+                      ? _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-primary shadow py-2 px-4",
+                            attrs: {
+                              href: "#",
+                              "data-toggle": "modal",
+                              "data-target": "#nseekers"
+                            }
+                          },
+                          [_vm._v("Apply Job")]
+                        )
+                      : _vm._e()
+                  ]),
                   _vm._m(3),
+                  _vm._v(" "),
                   _vm._m(4),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn shadow py-2 px-4",
-                      attrs: {
-                        href: "#",
-                        "data-toggle": "modal",
-                        "data-target": "#employers"
-                      }
-                    },
-                    [_vm._v("Edit")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-primary  shadow py-2 px-4",
-                      attrs: { href: "#" }
-                    },
-                    [_vm._v("Delete")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "modal fade",
-                      attrs: {
-                        id: "employers",
-                        tabindex: "-1",
-                        role: "dialog",
-                        "aria-labelledby": "modelTitleId",
-                        "aria-hidden": "true"
-                      }
-                    },
-                    [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "modal-dialog shadow",
-                          attrs: { role: "document" }
-                        },
-                        [
-                          _c("div", { staticClass: "modal-content" }, [
-                            _vm._m(5),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "modal-body" }, [
-                              _c("form", { staticClass: "p-2  bg-white" }, [
-                                _c("div", { staticClass: "row form-group" }, [
-                                  _c(
-                                    "div",
-                                    { staticClass: "col-md-12 mb-1 mb-md-0" },
-                                    [
-                                      _c(
-                                        "label",
-                                        {
-                                          staticClass: "font-weight-bold",
-                                          attrs: { for: "fullname" }
-                                        },
-                                        [_vm._v("Salary Range")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c("br"),
-                                      _vm._v(" "),
-                                      _c(
-                                        "select",
-                                        {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: _vm.job.salary_range,
-                                              expression: "job.salary_range"
-                                            }
-                                          ],
-                                          staticClass: "form-control",
-                                          attrs: { name: "", id: "" },
-                                          on: {
-                                            change: function($event) {
-                                              var $$selectedVal = Array.prototype.filter
-                                                .call(
-                                                  $event.target.options,
-                                                  function(o) {
-                                                    return o.selected
-                                                  }
-                                                )
-                                                .map(function(o) {
-                                                  var val =
-                                                    "_value" in o
-                                                      ? o._value
-                                                      : o.value
-                                                  return val
-                                                })
-                                              _vm.$set(
-                                                _vm.job,
-                                                "salary_range",
-                                                $event.target.multiple
-                                                  ? $$selectedVal
-                                                  : $$selectedVal[0]
-                                              )
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c("option", [
-                                            _vm._v(_vm._s(_vm.job.salary_range))
-                                          ]),
-                                          _vm._v(" "),
-                                          _vm._m(6),
-                                          _vm._v(" "),
-                                          _vm._m(7),
-                                          _vm._v(" "),
-                                          _vm._m(8),
-                                          _vm._v(" "),
-                                          _vm._m(9)
-                                        ]
-                                      )
-                                    ]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "row form-group" }, [
-                                  _c(
-                                    "div",
-                                    { staticClass: "col-md-12 mb-3 mb-md-0" },
-                                    [
-                                      _vm._m(10),
-                                      _vm._v(" "),
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.job.job_title,
-                                            expression: "job.job_title"
-                                          }
-                                        ],
-                                        staticClass: "form-control",
-                                        attrs: {
-                                          required: "",
-                                          type: "text",
-                                          id: "fullname",
-                                          placeholder: "eg. Full Stack Frontend"
-                                        },
-                                        domProps: { value: _vm.job.job_title },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.$set(
-                                              _vm.job,
-                                              "job_title",
-                                              $event.target.value
-                                            )
-                                          }
-                                        }
-                                      })
-                                    ]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { staticClass: "row form-group mb-4" },
-                                  [
-                                    _c(
-                                      "div",
-                                      { staticClass: "col-md-12 mb-3 mb-md-0" },
-                                      [
-                                        _vm._m(11),
-                                        _vm._v(" "),
-                                        _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: _vm.job.company,
-                                              expression: "job.company"
-                                            }
-                                          ],
-                                          staticClass: "form-control",
-                                          attrs: {
-                                            type: "text",
-                                            id: "fullname",
-                                            placeholder: "eg. Facebook, Inc.",
-                                            required: ""
-                                          },
-                                          domProps: { value: _vm.job.company },
-                                          on: {
-                                            input: function($event) {
-                                              if ($event.target.composing) {
-                                                return
-                                              }
-                                              _vm.$set(
-                                                _vm.job,
-                                                "company",
-                                                $event.target.value
-                                              )
-                                            }
-                                          }
-                                        })
-                                      ]
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "row form-group" }, [
-                                  _vm._m(12),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    { staticClass: "col-md-12 mb-3 mb-md-0" },
-                                    [
-                                      _c(
-                                        "select",
-                                        {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: _vm.job.job_type,
-                                              expression: "job.job_type"
-                                            }
-                                          ],
-                                          staticClass: "form-control",
-                                          attrs: { name: "", id: "" },
-                                          on: {
-                                            change: function($event) {
-                                              var $$selectedVal = Array.prototype.filter
-                                                .call(
-                                                  $event.target.options,
-                                                  function(o) {
-                                                    return o.selected
-                                                  }
-                                                )
-                                                .map(function(o) {
-                                                  var val =
-                                                    "_value" in o
-                                                      ? o._value
-                                                      : o.value
-                                                  return val
-                                                })
-                                              _vm.$set(
-                                                _vm.job,
-                                                "job_type",
-                                                $event.target.multiple
-                                                  ? $$selectedVal
-                                                  : $$selectedVal[0]
-                                              )
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "option",
-                                            { attrs: { selected: "" } },
-                                            [_vm._v(_vm._s(_vm.job.job_type))]
-                                          ),
-                                          _vm._v(" "),
-                                          _c("option", [_vm._v("Full Time")]),
-                                          _vm._v(" "),
-                                          _c("option", [_vm._v("Part Time")]),
-                                          _vm._v(" "),
-                                          _c("option", [_vm._v("Freelance")]),
-                                          _vm._v(" "),
-                                          _c("option", [_vm._v("Internship")]),
-                                          _vm._v(" "),
-                                          _c("option", [_vm._v("Termporary")])
-                                        ]
-                                      )
-                                    ]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { staticClass: "row form-group mb-4" },
-                                  [
-                                    _vm._m(13),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      { staticClass: "col-md-12 mb-3 mb-md-0" },
-                                      [
-                                        _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: _vm.job.location,
-                                              expression: "job.location"
-                                            }
-                                          ],
-                                          staticClass: "form-control",
-                                          attrs: {
-                                            type: "text",
-                                            required: "",
-                                            placeholder: "New York City"
-                                          },
-                                          domProps: { value: _vm.job.location },
-                                          on: {
-                                            input: function($event) {
-                                              if ($event.target.composing) {
-                                                return
-                                              }
-                                              _vm.$set(
-                                                _vm.job,
-                                                "location",
-                                                $event.target.value
-                                              )
-                                            }
-                                          }
-                                        })
-                                      ]
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "row form-group" }, [
-                                  _vm._m(14),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    { staticClass: "col-md-12 mb-3 mb-md-0" },
-                                    [
-                                      _c("textarea", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.job.description,
-                                            expression: "job.description"
-                                          }
-                                        ],
-                                        staticClass: "form-control",
-                                        attrs: {
-                                          name: "",
-                                          id: "",
-                                          cols: "30",
-                                          rows: "5",
-                                          required: ""
-                                        },
-                                        domProps: {
-                                          value: _vm.job.description
-                                        },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.$set(
-                                              _vm.job,
-                                              "description",
-                                              $event.target.value
-                                            )
-                                          }
-                                        }
-                                      })
-                                    ]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "row form-group" }, [
-                                  _vm._m(15),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    { staticClass: "col-md-12 mb-3 mb-md-0" },
-                                    [
-                                      _c("textarea", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.job.requirements,
-                                            expression: "job.requirements"
-                                          }
-                                        ],
-                                        staticClass: "form-control",
-                                        attrs: {
-                                          name: "",
-                                          id: "",
-                                          cols: "30",
-                                          rows: "3",
-                                          required: ""
-                                        },
-                                        domProps: {
-                                          value: _vm.job.requirements
-                                        },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.$set(
-                                              _vm.job,
-                                              "requirements",
-                                              $event.target.value
-                                            )
-                                          }
-                                        }
-                                      })
-                                    ]
-                                  )
-                                ])
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "modal-footer" }, [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn shadow btn-secondary",
-                                  attrs: {
-                                    type: "button",
-                                    "data-dismiss": "modal"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.deletePost()
-                                    }
-                                  }
-                                },
-                                [_vm._v("Close")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn shadow btn-primary",
-                                  attrs: { type: "button" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.post()
-                                    }
-                                  }
-                                },
-                                [_vm._v("Update")]
-                              )
-                            ])
-                          ])
-                        ]
-                      )
-                    ]
-                  ),
                   _vm._v(" "),
                   _c("p")
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(16)
+              _vm._m(5)
             ])
           ])
         ]),
         _vm._v(" "),
-        _c("footerApp")
+        _c("footerApp", { attrs: { id: "footer" } })
       ],
       1
     )
@@ -47398,31 +46095,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "mt-5" }, [
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-primary shadow py-2 px-4",
-          attrs: {
-            href: "#",
-            "data-toggle": "modal",
-            "data-target": "#seekers"
-          }
-        },
-        [_vm._v("Apply Job")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c(
       "div",
       {
         staticClass: "modal fade",
         attrs: {
-          id: "seekers",
+          id: "qseekers",
           tabindex: "-1",
           role: "dialog",
           "aria-labelledby": "modelTitleId",
@@ -47436,9 +46114,7 @@ var staticRenderFns = [
           [
             _c("div", { staticClass: "modal-content" }, [
               _c("div", { staticClass: "modal-header" }, [
-                _c("h5", { staticClass: "modal-title" }, [
-                  _vm._v("Modal title")
-                ]),
+                _c("h5", { staticClass: "modal-title" }, [_vm._v("Apply Job")]),
                 _vm._v(" "),
                 _c(
                   "button",
@@ -47493,125 +46169,59 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c("h5", { staticClass: "modal-title" }, [_vm._v("Edit Job")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("option", [
-      _vm._v("From "),
-      _c("b", [_vm._v("₦")]),
-      _vm._v("10,000  to  "),
-      _c("b", [_vm._v("₦")]),
-      _vm._v("49,000")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("option", [
-      _vm._v("From "),
-      _c("b", [_vm._v("₦")]),
-      _vm._v("50,000  to  "),
-      _c("b", [_vm._v("₦")]),
-      _vm._v("99,000")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("option", [
-      _vm._v("From "),
-      _c("b", [_vm._v("₦")]),
-      _vm._v("100,000  to  "),
-      _c("b", [_vm._v("₦")]),
-      _vm._v("500,000")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("option", [_c("b", [_vm._v("₦")]), _vm._v("500,000 and above")])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c(
-      "label",
-      { staticClass: "font-weight-bold", attrs: { for: "fullname" } },
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "nseekers",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "modelTitleId",
+          "aria-hidden": "true"
+        }
+      },
       [
-        _vm._v("Job Title "),
-        _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+        _c(
+          "div",
+          { staticClass: "modal-dialog modal-sm", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-body " }, [
+                _c("h5", { staticClass: "modal-title p-1" }, [
+                  _vm._v("Please login before you apply")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-primary shadow btn-sm",
+                    attrs: { href: "#footer" }
+                  },
+                  [_vm._v("Ok")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn shadow btn-sm",
+                    attrs: { "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Close")]
+                )
+              ])
+            ])
+          ]
+        )
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      { staticClass: "font-weight-bold", attrs: { for: "fullname" } },
-      [
-        _vm._v("Company "),
-        _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12" }, [
-      _c("h3", [_vm._v("Job Type")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12" }, [
-      _c("h3", [
-        _vm._v("Location "),
-        _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12" }, [
-      _c("h3", [
-        _vm._v("Job Description "),
-        _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12" }, [
-      _c("h3", [
-        _vm._v("Job Requirements "),
-        _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
-      ])
-    ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-lg-4" }, [
-      _c("div", { staticClass: "p-4 mb-3 bg-white" }, [
+      _c("div", { staticClass: "p-4 mb-3 bg-white shadow-sm " }, [
         _c("h3", { staticClass: "h5 text-black mb-3" }, [_vm._v("More Info")]),
         _vm._v(" "),
         _c("p", [
@@ -47677,6 +46287,38 @@ var render = function() {
               staticStyle: { "z-index": "1 !important" }
             },
             [
+              _c("i", {
+                staticClass: "fa fa-search",
+                staticStyle: {
+                  left: "-30px",
+                  bottom: "-34px",
+                  position: "relative"
+                },
+                attrs: { "aria-hidden": "true" }
+              }),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.search,
+                    expression: "search"
+                  }
+                ],
+                staticClass: "form-control rounded-pill pr-5 mx-0 mx-md-5",
+                attrs: { type: "text", placeholder: "Type a name" },
+                domProps: { value: _vm.search },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.search = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
               _c("h2", { staticClass: "mb-0 brand" }, [
                 _vm._v("Available Jobs")
               ]),
@@ -47785,7 +46427,7 @@ var render = function() {
           _c(
             "div",
             { staticClass: "alldata" },
-            _vm._l(_vm.getjobs, function(getjob) {
+            _vm._l(_vm.getjobs.data, function(getjob) {
               return _c(
                 "div",
                 {
@@ -47825,7 +46467,7 @@ var render = function() {
                                   "span",
                                   {
                                     class:
-                                      " text-white\n                         " +
+                                      "text-white\n                         " +
                                       (getjob.job_type == "Full Time"
                                         ? "bg-danger"
                                         : "") +
@@ -47895,7 +46537,19 @@ var render = function() {
             0
           ),
           _vm._v(" "),
-          _vm._m(1)
+          _c("div", { staticClass: "row mt-5" }, [
+            _c(
+              "div",
+              { staticClass: "text-center col-md-12" },
+              [
+                _c("pagination", {
+                  attrs: { data: _vm.getjobs },
+                  on: { "pagination-change-page": _vm.loadJobs }
+                })
+              ],
+              1
+            )
+          ])
         ])
       ]),
       _vm._v(" "),
@@ -47924,40 +46578,6 @@ var staticRenderFns = [
         _vm._v("Apply Job")
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row mt-5" }, [
-      _c("div", { staticClass: "col-md-12 text-center" }, [
-        _c("div", { staticClass: "site-block-27" }, [
-          _c("ul", [
-            _c("li", [
-              _c("a", { attrs: { href: "#" } }, [
-                _c("i", { staticClass: "icon-keyboard_arrow_left h5" })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "active" }, [_c("span", [_vm._v("1")])]),
-            _vm._v(" "),
-            _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("2")])]),
-            _vm._v(" "),
-            _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("3")])]),
-            _vm._v(" "),
-            _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("4")])]),
-            _vm._v(" "),
-            _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("5")])]),
-            _vm._v(" "),
-            _c("li", [
-              _c("a", { attrs: { href: "#" } }, [
-                _c("i", { staticClass: "icon-keyboard_arrow_right h5" })
-              ])
-            ])
-          ])
-        ])
-      ])
-    ])
   }
 ]
 render._withStripped = true
@@ -47981,124 +46601,484 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("footer", { staticClass: "site-footer pb-1" }, [
+      _c("div", { staticClass: "container pb-0" }, [
+        _c("div", { staticClass: "row " }, [
+          _c("div", { staticClass: "col-md-4 col-12 mb-5 mb-lg-0" }, [
+            _c(
+              "h1",
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "h2 mb-0",
+                    staticStyle: { color: "rgb(145, 138, 138) !important" },
+                    attrs: { to: "/" }
+                  },
+                  [
+                    _vm._v("Job"),
+                    _c("strong", { staticClass: "text-info" }, [
+                      _vm._v("start")
+                    ])
+                  ]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _vm.user
+              ? _c("div", [
+                  _c(
+                    "h3",
+                    {
+                      staticClass: "footer-heading ",
+                      staticStyle: { opacity: "30%" }
+                    },
+                    [
+                      _c("b", [_vm._v(_vm._s(_vm.user.name))]),
+                      _vm._v(" "),
+                      _c("br"),
+                      _vm._v("\n        " + _vm._s(_vm.user.email) + "\n      ")
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn-info text-white  w-50 btn-sm btn",
+                      on: {
+                        click: function($event) {
+                          return _vm.logout()
+                        }
+                      }
+                    },
+                    [_vm._v("Logout")]
+                  )
+                ])
+              : _c("div", [
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "btn-info text-white shadow w-50 btn-sm btn mb-2",
+                      attrs: { "data-toggle": "modal", "data-target": "#login" }
+                    },
+                    [_vm._v("Login")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "shadow bg-white  w-50 btn-sm btn",
+                      attrs: {
+                        "data-toggle": "modal",
+                        "data-target": "#signup"
+                      }
+                    },
+                    [_vm._v("Signup")]
+                  )
+                ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "modal fade",
+              attrs: {
+                id: "login",
+                "data-target": "#login",
+                tabindex: "-1",
+                role: "dialog",
+                "aria-labelledby": "modelTitleId",
+                "aria-hidden": "true"
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "modal-dialog modal-sm",
+                  attrs: { role: "document" }
+                },
+                [
+                  _c("div", { staticClass: "modal-content" }, [
+                    _c("div", { staticClass: "modal-body text-dark" }, [
+                      _c(
+                        "form",
+                        {
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              return _vm.login()
+                            }
+                          }
+                        },
+                        [
+                          _c("h2", [_vm._v("Login")]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              { attrs: { for: "exampleInputEmail1" } },
+                              [_vm._v("Email address")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.loginEmail,
+                                  expression: "loginEmail"
+                                }
+                              ],
+                              staticClass: "form-control py-1",
+                              attrs: {
+                                type: "email",
+                                id: "exampleInputEmail1",
+                                "aria-describedby": "emailHelp",
+                                placeholder: "Enter email"
+                              },
+                              domProps: { value: _vm.loginEmail },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.loginEmail = $event.target.value
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              { attrs: { for: "exampleInputPassword1" } },
+                              [_vm._v("Password")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.loginPassword,
+                                  expression: "loginPassword"
+                                }
+                              ],
+                              staticClass: "form-control py-1",
+                              attrs: {
+                                type: "password",
+                                id: "exampleInputPassword1",
+                                placeholder: "Password"
+                              },
+                              domProps: { value: _vm.loginPassword },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.loginPassword = $event.target.value
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn  shadow btn-primary",
+                              attrs: { type: "submit" }
+                            },
+                            [_vm._v("login")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn shadow ",
+                              attrs: { "data-dismiss": "modal", type: "submit" }
+                            },
+                            [_vm._v("Close")]
+                          )
+                        ]
+                      )
+                    ])
+                  ])
+                ]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "modal fade",
+              attrs: {
+                id: "signup",
+                tabindex: "-1",
+                role: "dialog",
+                "aria-labelledby": "modelTitleId",
+                "aria-hidden": "true"
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "modal-dialog modal-sm",
+                  attrs: { role: "document" }
+                },
+                [
+                  _c("div", { staticClass: "modal-content" }, [
+                    _c("div", { staticClass: "modal-body text-dark" }, [
+                      _c(
+                        "form",
+                        {
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              return _vm.signup()
+                            }
+                          }
+                        },
+                        [
+                          _c("h2", [_vm._v("Signup")]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              { attrs: { for: "exampleInputEmail1" } },
+                              [_vm._v("Full Name")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.name,
+                                  expression: "name"
+                                }
+                              ],
+                              staticClass: "form-control py-1",
+                              attrs: {
+                                type: "text",
+                                id: "exampleInputEmail1",
+                                "aria-describedby": "emailHelp",
+                                placeholder: "Enter name"
+                              },
+                              domProps: { value: _vm.name },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.name = $event.target.value
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              { attrs: { for: "exampleInputEmail1" } },
+                              [_vm._v("Email address")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.email,
+                                  expression: "email"
+                                }
+                              ],
+                              staticClass: "form-control py-1",
+                              attrs: {
+                                type: "email",
+                                id: "exampleInputEmail1",
+                                "aria-describedby": "emailHelp",
+                                placeholder: "Enter email"
+                              },
+                              domProps: { value: _vm.email },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.email = $event.target.value
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              { attrs: { for: "exampleInputPassword1" } },
+                              [_vm._v("Password")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.password,
+                                  expression: "password"
+                                }
+                              ],
+                              staticClass: "form-control py-1",
+                              attrs: {
+                                type: "password",
+                                id: "exampleInputPassword1",
+                                placeholder: "Password"
+                              },
+                              domProps: { value: _vm.password },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.password = $event.target.value
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "my-select" } }, [
+                              _vm._v("Role")
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.role,
+                                    expression: "role"
+                                  }
+                                ],
+                                staticClass: "custom-select",
+                                attrs: { id: "my-select", name: "" },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.role = $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  }
+                                }
+                              },
+                              [
+                                _c("option", [_vm._v("jobseeker")]),
+                                _vm._v(" "),
+                                _c("option", [_vm._v("employer")])
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn  shadow btn-primary",
+                              attrs: { type: "submit" }
+                            },
+                            [_vm._v("Signup")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn shadow ",
+                              attrs: { "data-dismiss": "modal", type: "submit" }
+                            },
+                            [_vm._v("Close")]
+                          )
+                        ]
+                      )
+                    ])
+                  ])
+                ]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _vm._m(0),
+          _vm._v(" "),
+          _vm._m(1)
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", { staticClass: "py-5 bg-primary" }, [
-        _c("div", { staticClass: "container" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-12" }, [
-              _c(
-                "h2",
-                { staticClass: "text-white h4 font-weihgt-normal mb-4" },
-                [_vm._v("Subscribe Newsletter")]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("form", { staticClass: "row", attrs: { action: "" } }, [
-            _c("div", { staticClass: "col-md-9" }, [
-              _c("input", {
-                staticClass: "form-control border-0 mb-3 mb-md-0",
-                attrs: { type: "text", placeholder: "Enter Your Email" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3" }, [
-              _c("input", {
-                staticClass: "btn btn-dark btn-block",
-                staticStyle: { height: "45px" },
-                attrs: { type: "submit", value: "Send" }
-              })
-            ])
-          ])
-        ])
+    return _c("div", { staticClass: " col-6 col-md-4  mb-5 mb-lg-0" }, [
+      _c("h3", { staticClass: "footer-heading mb-4" }, [
+        _vm._v("Contact Info")
       ]),
       _vm._v(" "),
-      _c("footer", { staticClass: "site-footer pb-1" }, [
-        _c("div", { staticClass: "container pb-0" }, [
-          _c("div", { staticClass: "row " }, [
-            _c("div", { staticClass: "col-md-4 col-12 mb-5 mb-lg-0" }, [
-              _c(
-                "h3",
-                {
-                  staticClass: "footer-heading ",
-                  staticStyle: { opacity: "80%" }
-                },
-                [
-                  _vm._v("\n                    Username "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c("a", { staticClass: "text-info", attrs: { href: "#" } }, [
-                    _vm._v("Logout")
-                  ])
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: " col-6 col-md-4  mb-5 mb-lg-0" }, [
-              _c("h3", { staticClass: "footer-heading mb-4" }, [
-                _vm._v("Contact Info")
-              ]),
-              _vm._v(" "),
-              _c("ul", { staticClass: "list-unstyled" }, [
-                _c("li", [
-                  _c("span", { staticClass: "d-block text-white" }, [
-                    _vm._v("Address")
-                  ]),
-                  _vm._v(
-                    "\n                New York - 2398 10 Hadson Carl Street\n              "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("span", { staticClass: "d-block text-white" }, [
-                    _vm._v("Telephone")
-                  ]),
-                  _vm._v("\n                +1 232 305 3930\n              ")
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("span", { staticClass: "d-block text-white" }, [
-                    _vm._v("Email")
-                  ]),
-                  _vm._v(
-                    "\n                info@yourdomain.com\n              "
-                  )
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-6 col-md-4 mb-5 mb-lg-0" }, [
-              _c("h3", { staticClass: "footer-heading mb-4" }, [
-                _vm._v("Company")
-              ]),
-              _vm._v(" "),
-              _c("ul", { staticClass: "list-unstyled" }, [
-                _c("li", [
-                  _c("a", { attrs: { href: "#" } }, [_vm._v("About")])
-                ]),
-                _vm._v(" "),
-                _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("Team")])]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("a", { attrs: { href: "#" } }, [
-                    _vm._v("Terms & Policies")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("a", { attrs: { href: "#" } }, [_vm._v("Contact Us")])
-                ])
-              ])
-            ])
-          ])
+      _c("ul", { staticClass: "list-unstyled" }, [
+        _c("li", [
+          _c("span", { staticClass: "d-block text-white" }, [
+            _vm._v("Address")
+          ]),
+          _vm._v(
+            "\n                New York - 2398 10 Hadson Carl Street\n              "
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("span", { staticClass: "d-block text-white" }, [
+            _vm._v("Telephone")
+          ]),
+          _vm._v("\n                +1 232 305 3930\n              ")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("span", { staticClass: "d-block text-white" }, [_vm._v("Email")]),
+          _vm._v("\n                info@yourdomain.com\n              ")
         ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-6 col-md-4 mb-5 mb-lg-0" }, [
+      _c("h3", { staticClass: "footer-heading mb-4" }, [_vm._v("Company")]),
+      _vm._v(" "),
+      _c("ul", { staticClass: "list-unstyled" }, [
+        _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("About")])]),
+        _vm._v(" "),
+        _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("Team")])]),
+        _vm._v(" "),
+        _c("li", [
+          _c("a", { attrs: { href: "#" } }, [_vm._v("Terms & Policies")])
+        ]),
+        _vm._v(" "),
+        _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("Contact Us")])])
       ])
     ])
   }
@@ -48875,9 +47855,42 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "row form-group mb-5" }, [
+                    _c("div", { staticClass: "row form-group " }, [
                       _c("div", { staticClass: "col-md-12 mb-3 mb-md-0" }, [
                         _vm._m(5),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.company_email,
+                              expression: "company_email"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "email",
+                            id: "fullname",
+                            placeholder: "eg. youremail@domain.com",
+                            required: ""
+                          },
+                          domProps: { value: _vm.company_email },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.company_email = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row form-group mb-5" }, [
+                      _c("div", { staticClass: "col-md-12 mb-3 mb-md-0" }, [
+                        _vm._m(6),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -48909,7 +47922,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "row form-group" }, [
-                      _vm._m(6),
+                      _vm._m(7),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-12 mb-3 mb-md-0" }, [
                         _c("label", { attrs: { for: "option-job-type-1" } }, [
@@ -48983,7 +47996,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "row form-group mb-4" }, [
-                      _vm._m(7),
+                      _vm._m(8),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-12 mb-3 mb-md-0" }, [
                         _c("input", {
@@ -49015,7 +48028,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "row form-group" }, [
-                      _vm._m(8),
+                      _vm._m(9),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-12 mb-3 mb-md-0" }, [
                         _c("textarea", {
@@ -49049,7 +48062,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "row form-group" }, [
-                      _vm._m(9),
+                      _vm._m(10),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-12 mb-3 mb-md-0" }, [
                         _c("textarea", {
@@ -49082,12 +48095,12 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _vm._m(10)
+                    _vm._m(11)
                   ]
                 )
               ]),
               _vm._v(" "),
-              _vm._m(11)
+              _vm._m(12)
             ])
           ])
         ]),
@@ -49150,6 +48163,19 @@ var staticRenderFns = [
       { staticClass: "font-weight-bold", attrs: { for: "fullname" } },
       [
         _vm._v("Job Title "),
+        _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "font-weight-bold", attrs: { for: "fullname" } },
+      [
+        _vm._v("Company email address  "),
         _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
       ]
     )
@@ -81991,15 +81017,17 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _footer_vue_vue_type_template_id_16be63e5___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./footer.vue?vue&type=template&id=16be63e5& */ "./resources/js/components/layout/footer.vue?vue&type=template&id=16be63e5&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _footer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./footer.vue?vue&type=script&lang=js& */ "./resources/js/components/layout/footer.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  script,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _footer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _footer_vue_vue_type_template_id_16be63e5___WEBPACK_IMPORTED_MODULE_0__["render"],
   _footer_vue_vue_type_template_id_16be63e5___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
@@ -82013,6 +81041,20 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 if (false) { var api; }
 component.options.__file = "resources/js/components/layout/footer.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/layout/footer.vue?vue&type=script&lang=js&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/layout/footer.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_footer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./footer.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/layout/footer.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_footer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 

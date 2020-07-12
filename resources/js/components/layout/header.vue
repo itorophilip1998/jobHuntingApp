@@ -1,12 +1,8 @@
  <template>
      <div>
-
-
-
        <header class="site-navbar py-md-1 " role="banner">
             <div class="container">
               <div class="row align-items-center">
-
                 <div class="col-6 col-xl-2 pt-0">
                   <h1 class="mb-0 brand"><router-link to="/" style="color: silver !important;" class="h2 mb-0">Job<strong >start</strong></router-link></h1>
                 </div>
@@ -37,18 +33,14 @@
 
 
                 <div class="col-6 col-xl-2 text-right d-block">
-
                   <div class="d-inline-block d-xl-none ml-md-0 mr-auto py-3" style="position: relative; top: 3px;">
                       <a @click="toggle()" class="site-menu-toggle js-menu-toggle text-white"><span class="icon-menu h3"></span></a></div>
                         <div class="sidebar">
-
                         </div>
-                </div>
-
+                </div> 
               </div>
             </div>
             </header>
-
                <!-- sidebar -->
                 <div ref="sidebar" @mouseout="cancel()" class="sidebar d-md-none bg-white mr-auto shadows pb-0">
                    <h3 class="text-dark p-1  mt-3" >Job<span class="text-primary">start</span>  <span class="float-right btn mr-2 text-secondary" ref="close"  @click="cancel()">X</span></h3>
@@ -65,8 +57,6 @@
                                 <li @click="cancel()"><router-link class="link" to="/jobs">Termporary</router-link></li>
                               </ul>
                         </div>
-
-
                     <li><router-link @click="cancel()" class="link" to="/premium" > <i class="fa fa-money" aria-hidden="true"></i> Premium</router-link></li>
                     <li><router-link @click="cancel()" class="link" to="/about" > <i class="fa fa-info-circle" aria-hidden="true"></i> About</router-link></li>
                     <li><router-link @click="cancel()" class="link" to="/contact" > <i class="fa fa-phone" aria-hidden="true"></i> Contact</router-link></li>

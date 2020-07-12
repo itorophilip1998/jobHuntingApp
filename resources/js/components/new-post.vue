@@ -41,6 +41,12 @@
                 </div>
               </div>
 
+              <div class="row form-group ">
+                <div class="col-md-12 mb-3 mb-md-0">
+                  <label class="font-weight-bold" for="fullname">Company email address  <span class="text-danger">*</span> </label>
+                  <input v-model="company_email"  type="email" id="fullname" class="form-control" placeholder="eg. youremail@domain.com" required>
+                </div>
+              </div>
               <div class="row form-group mb-5">
                 <div class="col-md-12 mb-3 mb-md-0">
                   <label class="font-weight-bold" for="fullname">Company <span class="text-danger">*</span> </label>
@@ -157,6 +163,7 @@
                 location:'',
                 description:'',
                 requirements:'',
+                company_email:'',
         }
     },
      methods: {
@@ -202,6 +209,7 @@
             formData.append('job_type', this.job_type);
             formData.append('description', this.description);
             formData.append('requirements', this.requirements);
+            formData.append('company_email', this.company_email);
             axios.post('/postjob', formData).then((res) => {
             this.message('top-end','success',res.data.message,false,1500);
             })

@@ -3,10 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Job;
+use Input;
+use Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class JobController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +21,7 @@ class JobController extends Controller
 
     public function index()
     {
-        $jobs = Job::latest()->get();
+        $jobs = Job::latest()->paginate(10);
         return response()->json($jobs, 200);
     }
 
@@ -26,15 +32,19 @@ class JobController extends Controller
      */
     public function create(Request $request)
     {
-        // $request->validate([
-        //     'job_title' => 'required|string',
-        //     'company' => 'required|string',
-        //     'job_type' => 'required|string',
-        //     'location' => 'required|string',
-        //     'description' => 'required|text',
-        //     'requirements' => 'required|string',
-        //     'salary_range' => 'required|string',
-        // ]);
+        $validator = Validator::make(request()->all(),
+        array(
+            'job_title' => 'required|string',
+            'company' => 'required|string',
+            'job_type' => 'required|string',
+            'location' => 'required|string',
+            'description' => 'required|text',
+            'requirements' => 'required|string',
+            'salary_range' => 'required|string',
+            'company_email' => 'required|string',
+
+        ));
+
         $job = new Job;
         $job->job_title = $request->input('job_title');
         $job->company = $request->input('company');
@@ -43,11 +53,14 @@ class JobController extends Controller
         $job->description = $request->input('description');
         $job->requirements = $request->input('requirements');
         $job->salary_range = $request->input('salary_range');
+        $job->company_email = $request->input('company_email');
+        $job->user_id = Auth::user()->id;
         $job->save();
 
         return response()->json([
-            "message" => "New job created",
-        ], 201);
+            "message" => "job updated",
+            $job
+        ], 200);
 
     }
 
@@ -108,17 +121,20 @@ class JobController extends Controller
      */
     public function update(Request $request,$job)
     {
-        // dd($request->all());
-        // $this->validate($request,[
-        //     'job_title' => 'required|string',
-        //     'company' => 'required|string',
-        //     'job_type' => 'required|string',
-        //     'location' => 'required|string',
-        //     'description' => 'required|text',
-        //     'requirements' => 'required|string',
-        //     'salary_range' => 'required|string',
-        // ]);
-        $job = Job::find($job);
+        $validator = Validator::make(request()->all(),
+        array(
+            'job_title' => 'required|string',
+            'company' => 'required|string',
+            'job_type' => 'required|string',
+            'location' => 'required|string',
+            'description' => 'required|text',
+            'requirements' => 'required|string',
+            'salary_range' => 'required|string',
+            'company_email' => 'required|string',
+
+        ));
+
+        $job = new Job;
         $job->job_title = $request->input('job_title');
         $job->company = $request->input('company');
         $job->job_type = $request->input('job_type');
@@ -126,6 +142,9 @@ class JobController extends Controller
         $job->description = $request->input('description');
         $job->requirements = $request->input('requirements');
         $job->salary_range = $request->input('salary_range');
+        $job->company_email = $request->input('company_email');
+        $job->user_id = Auth::user()->id;
+
         $job->save();
 
         return response()->json([
@@ -143,7 +162,7 @@ class JobController extends Controller
     public function destroy($id)
     {
         $job = Job::find($id);
-        $job->delete(); 
+        $job->delete();
         return response()->json([
             "message" => "job deleted",
         ], 200);

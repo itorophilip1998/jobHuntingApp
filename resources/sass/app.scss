@@ -6,9 +6,25 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
-@import './scss/style.scss'; 
+@import './scss/style.scss';
 @import './font-awesome-4.7.0/css/font-awesome.min.css';
 @import '/node_modules/vue-flash-message/dist/vue-flash-message.min.css';
+.page-item
+{
+//   margin: auto !important;
+}
+.pagination
+{
+
+    li
+    {
+        a{
+        border-radius: 30px !important;
+         margin: 0 2px;
+        }
+    }
+
+}
 .overlay2{
         width: 100%;
         height: 110vh;
