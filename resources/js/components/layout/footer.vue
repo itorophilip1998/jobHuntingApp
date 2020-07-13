@@ -9,7 +9,8 @@
 <div v-if="user">
     <h3  class="footer-heading " style="opacity:30%" >
         <b>{{user.name}}</b> <br>
-        {{user.email}}
+        {{user.email}}<br>
+        <small>{{user.role}}</small>
       </h3>
 <button  @click="logout()"  class="btn-info text-white  w-50 btn-sm btn" >Logout</button>
 </div>
@@ -153,7 +154,7 @@
               axios.post('/login',formData).then((res) => {
                  this.message('top-end','success','login successfully',false,1500);
               }).catch((err) => {
-                this.message('top-end','error','incorrect login details',false,1500);
+                this.message('top-end','error','incorrect details',false,1500);
         });
             },
             signup()
@@ -166,7 +167,7 @@
               axios.post('/register',formData).then((res) => {
                  this.message('top-end','success','Signup successfully',false,1500);
               }).catch((err) => {
-                this.message('top-end','error',err.data,false,1500);
+                this.message('top-end','error','incorrect details',false,1500);
         });
             },
         }

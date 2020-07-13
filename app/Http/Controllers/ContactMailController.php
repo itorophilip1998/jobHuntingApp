@@ -7,7 +7,7 @@ use App\Mail\ContactMail;
 use Illuminate\Support\Facades\Mail;
 
 class ContactMailController extends Controller
-{   
+{
     public function index(){
         return view('sendemail');
     }
@@ -19,16 +19,13 @@ class ContactMailController extends Controller
             'subject' => 'required',
             'content' => 'required'
         ]);
-
         $data = array(
            'full_name'=>$request->full_name,
            'email'=>$request->email,
            'subject'=>$request->subject,
             'content'=>$request->content
         );
-
-        Mail::to('gideongarcia11@gmail.com')->send(new ContactMail($data));
-        // return back()->with('success','Mail sent successfully!');
-        return response()->json( 'mail sent successfully', 200);
+        Mail::to('itkeyzzpianny@gmail.com')->send(new ContactMail($data));   // return back()->with('success','Mail sent successfully!');
+        return response()->json(['message'=>'Mail sent successfully!'], 200);
     }
 }

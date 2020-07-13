@@ -20,7 +20,7 @@ class CreateJobsTable extends Migration
             $table->string('job_type');
             $table->string('location');
             $table->text('description');
-            $table->string('requirements');
+            $table->text('requirements');
             $table->string('salary_range');
             $table->string('company_email');
             $table->unsignedBigInteger('user_id');

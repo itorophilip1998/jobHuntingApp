@@ -38,7 +38,7 @@
 
                </div>
                <div class="job-post-item-body d-block d-md-flex">
-                 <div class="mr-3"><span class="fl-bigmug-line-portfolio23"></span> <a href="#">{{job.company}}</a></div>
+                 <div class="mr-3"><span class="fl-bigmug-line-portfolio23"></span> <a :href="`http://www.google.com/search?q=${job.company}`">{{job.company}}</a></div>
                  <div><span class="fl-bigmug-line-big104"></span> <span>{{job.location}}</span></div>
                </div>
               </div>
@@ -71,11 +71,21 @@
                                                    </button>
                                            </div>
                                            <div class="modal-body">
-                                               Body
-                                           </div>
-                                           <div class="modal-footer">
-                                               <button type="button" class="btn btn-secondary shadow" data-dismiss="modal">Close</button>
-                                               <button type="button" class="btn btn-primary shadow">Save</button>
+                                            <form  @submit.prevent="uploadCv()">
+                                                <div class="form-group">
+                                                <label for="">About you</label>
+                                                <textarea class="form-control" name="" id="" rows="3" v-model="about"></textarea>
+                                                </div>
+
+                                                    <div class="form-group">
+                                                      <label for="exampleFormControlFile1">Upload your CV/Resume</label>
+                                                      <input type="file" class="form-control" id="exampleFormControlFile1" placeholder="Upload your CV/Resume in a word document eg. doc,pdf etc"
+                                                  accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf" @change="previewImage">
+                                                    </div>
+
+                                                <button type="submit" class="btn btn-primary shadow">Submit</button>
+                                                <button type="button" class="btn btn-secondary shadow" data-dismiss="modal">Close</button>
+                                              </form>
                                            </div>
                                        </div>
                                    </div>
@@ -85,7 +95,7 @@
                                    <div class="modal-dialog modal-sm" role="document">
                                        <div class="modal-content">
                                            <div class="modal-body ">
-                                               <h5 class="modal-title p-1">Please login before you apply</h5>
+                                               <h5 class="modal-title p-1">Please login as a jobseeker before you apply</h5>
                                                <a href="#footer" class="btn btn-primary shadow btn-sm">Ok</a>
                                                <a class="btn shadow btn-sm" data-dismiss="modal"  >Close</a>
                                            </div>
@@ -212,7 +222,10 @@
       return {
           job:{},
           user:{},
-          
+          about:"",
+          resume:"",
+
+
       }
   },
   mounted() {
@@ -240,22 +253,24 @@
                  this.$router.push(`/jobs`);
                 })
             },
-         post()
-          {
-            const formData = new FormData();
-            formData.append('salary_range',this.job.salary_range);
-            formData.append('job_title',this.job.job_title);
-            formData.append('company', this.job.company);
-            formData.append('location', this.job.location);
-            formData.append('job_type', this.job.job_type);
-            formData.append('description', this.job.description);
-            formData.append('requirements', this.job.requirements);
-            formData.append('_method', 'PUT');
-            axios.post(`/updatejob/${this.$route.params.name}`, formData).then((res) => {
-            this.message('top-end','success',res.data.message,false,1500);
-            })
-
-          }
+            previewImage() {
+                let input = event.target;
+                this.resume= input.files[0];
+            },
+            uploadCv()
+            {
+                const formData = new FormData();
+                formData.append('full_name', this.user.name);
+                formData.append('email', this.user.email);
+                formData.append('subject', "CV/Resume");
+                formData.append('content', this.about);
+                formData.append('attachment', this.resume);
+                formData.append('to', this.job.company_email);
+                let config = { headers: { 'Content-Type': 'multipart/form-data' } }
+                axios.post('/jobcv', formData, config).then((res) => {
+                    this.message('top-end','success',res.data.message,false,1500);
+                });
+            },
 
       }
     }

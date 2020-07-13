@@ -39,12 +39,10 @@ class JobController extends Controller
             'job_type' => 'required|string',
             'location' => 'required|string',
             'description' => 'required|text',
-            'requirements' => 'required|string',
+            'requirements' => 'required|text',
             'salary_range' => 'required|string',
             'company_email' => 'required|string',
-
         ));
-
         $job = new Job;
         $job->job_title = $request->input('job_title');
         $job->company = $request->input('company');
@@ -55,8 +53,7 @@ class JobController extends Controller
         $job->salary_range = $request->input('salary_range');
         $job->company_email = $request->input('company_email');
         $job->user_id = Auth::user()->id;
-        $job->save();
-
+        $job->save(); 
         return response()->json([
             "message" => "job updated",
             $job
@@ -131,9 +128,7 @@ class JobController extends Controller
             'requirements' => 'required|string',
             'salary_range' => 'required|string',
             'company_email' => 'required|string',
-
         ));
-
         $job = new Job;
         $job->job_title = $request->input('job_title');
         $job->company = $request->input('company');

@@ -13,12 +13,16 @@ class JobMailController extends Controller
     }
 
     public function jobcv(Request $request){
+
+        // dd($request->all());
+
         $this->validate($request, [
             'full_name' => 'required',
             'email' => 'required|email',
             'subject' => 'required',
             'content' => 'required',
-            'attachment' => 'required'
+            'attachment' => 'required',
+            'to' => 'required'
         ]);
 
         $data = array(
@@ -26,11 +30,12 @@ class JobMailController extends Controller
            'email'=>$request->email,
            'subject'=>$request->subject,
             'content'=>$request->content,
-            'attachment'=>$request->attachment
+            'attachment'=>$request->attachment,
+            'to'=>$request->to
         );
 
-        Mail::to('gideongarcia11@gmail.com')->send(new JobMail($data));
+        Mail::to($request->to)->send(new JobMail($data));
         // return back()->with('success','Mail sent successfully!');
-        return response()->json( 'mail sent successfully', 200);
+        return response()->json(['message','Mail sent successfully!'], 200);
     }
 }

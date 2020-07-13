@@ -108,7 +108,22 @@
 
               <div class="row form-group">
                 <div class="col-md-12">
-                  <input type="submit" value="Post" class="btn btn-primary shadow py-2 px-5">
+                   <button type="submit"   v-if="user.role=='employer'"  class="btn btn-primary shadow py-2 px-4"  data-toggle="modal" data-target='#qemployer'>Post</button>
+                    <a  v-if="user.role !='employer'" href="#" class="btn btn-primary shadow py-2 px-4"  data-toggle="modal" data-target='#nemployer'>Post</a>
+             <!--not qualify employer-->
+             <div class="modal fade" id="nemployer" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body ">
+                            <h5 class="modal-title p-1">Please login as an employer  before you Post</h5>
+                            <a href="#footer" class="btn btn-primary shadow btn-sm">Ok</a>
+                            <a class="btn shadow btn-sm" data-dismiss="modal"  >Close</a>
+                        </div>
+                    </div>
+                </div>
+   </div>
+
+
                 </div>
               </div>
 
@@ -164,9 +179,17 @@
                 description:'',
                 requirements:'',
                 company_email:'',
+                user:{},
+
         }
     },
+    mounted() {
+       axios.get('/user').then((res) => {
+                 this.user = res.data
+       });
+    },
      methods: {
+
             message(place,logo,topic,btn,time){
             Swal.fire({
             position: place,
@@ -174,8 +197,7 @@
             title: topic,
             showConfirmButton: btn,
             timer: time
-            })
-
+            }) 
             },
          freelance()
           {
