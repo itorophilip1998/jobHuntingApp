@@ -22,7 +22,7 @@ class JobMailController extends Controller
             'subject' => 'required',
             'content' => 'required',
             'attachment' => 'required',
-            'to' => 'required'
+            'to' => 'required|email'
         ]);
 
         $data = array(
@@ -35,7 +35,7 @@ class JobMailController extends Controller
         );
 
         Mail::to($request->to)->send(new JobMail($data));
-        // return back()->with('success','Mail sent successfully!');
-        return response()->json(['message','Mail sent successfully!'], 200);
+        return back()->with('success','Mail sent successfully!');
+        // return response()->json(['message','Mail sent successfully!'], 200);
     }
 }

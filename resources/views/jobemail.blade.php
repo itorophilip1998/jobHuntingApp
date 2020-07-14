@@ -45,6 +45,10 @@
                 <input type="text" name="email" id="" class="form-control" placeholder="" aria-describedby="helpId">
             </div>
             <div class="form-group">
+                <label for="Enter your to">To</label>
+                <input type="email" name="to" id="" class="form-control" placeholder="" aria-describedby="helpId">
+            </div>
+            <div class="form-group">
                 <label for="Enter your email">Subject</label>
                 <input type="text" name="subject" id="" class="form-control" placeholder="" aria-describedby="helpId">
             </div>
