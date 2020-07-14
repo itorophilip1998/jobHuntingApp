@@ -13,9 +13,14 @@ import Premium from '../js/components/premium';
 
 // Admin
 import Admin from '../js/components/admin/admin';
-import adminjobs from '../js/components/admin/jobs';
-import adminseekers from '../js/components/admin/seekers';
-import adminusers from '../js/components/admin/users';
+import adminapplyjobs from '../js/components/admin/adminapplyjobs';
+import admincontact from '../js/components/admin/admincontact';
+import adminemployers from '../js/components/admin/adminemployers';
+import adminjobs from '../js/components/admin/adminjobs';
+import adminpayment from '../js/components/admin/adminpayment';
+import adminprofile from '../js/components/admin/adminprofile';
+import adminusers from '../js/components/admin/adminusers';
+import adminjobseekers from '../js/components/admin/adminjobseekers';
 
 const routes = [
         {
@@ -81,8 +86,10 @@ const routes = [
          }
 
         },
+
+        // Admin
         {
-         path: '/dasboard',
+         path: '/',
          component:Admin,
          meta: {
                 auth: true,
@@ -90,11 +97,27 @@ const routes = [
          }
         },
         {
-         path: '/adminseekers',
-         component:adminseekers,
+         path: '/adminapplyjobs',
+         component:adminapplyjobs,
          meta: {
                 auth: true,
-                title: 'seekers'
+                title: 'applyjobs'
+         }
+        },
+        {
+         path: '/admincontact',
+         component:admincontact,
+         meta: {
+                auth: true,
+                title: 'contact'
+         }
+        },
+        {
+         path: '/adminemployers',
+         component:adminemployers,
+         meta: {
+                auth: true,
+                title: 'employers'
          }
         },
         {
@@ -106,6 +129,22 @@ const routes = [
          }
         },
         {
+         path: '/adminpayment',
+         component:adminpayment,
+         meta: {
+                auth: true,
+                title: 'payment'
+         }
+        },
+        {
+         path: '/adminprofile',
+         component:adminprofile,
+         meta: {
+                auth: true,
+                title: 'profile'
+         }
+        },
+        {
          path: '/adminusers',
          component:adminusers,
          meta: {
@@ -113,6 +152,15 @@ const routes = [
                 title: 'users'
          }
         },
+        {
+         path: '/jobseekers',
+         component:adminjobseekers,
+         meta: {
+                auth: true,
+                title: 'Jobseekers'
+         }
+        },
+
 
 ]
 

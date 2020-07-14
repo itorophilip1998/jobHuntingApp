@@ -14,7 +14,7 @@ class JobMailController extends Controller
 
     public function jobcv(Request $request){
 
-        dd($request->all());
+        // dd($request->all());
 
         $this->validate($request, [
             'full_name' => 'required',

@@ -24,9 +24,9 @@ class WelcomeController extends Controller
     }
 
 
-    public function admin()
+    public function getadmin()
     {
         return view('admin');
-        
+
     }
 }
