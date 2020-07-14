@@ -6,7 +6,7 @@
         <!--header-->
         <headerApp></headerApp>
         <br><br><br><br><br>
-      <div class="container text-center" style="z-index: 1 !important;">
+      <div class="container text-center content" style="z-index: 1 !important;">
         <h2 class="mb-0 brand">Go Premium</h2>
         <p class="mb-0 unit-6"><router-link to="/" class="text-info">Home</router-link> / <span>premium</span></p>
       </div>
@@ -134,7 +134,29 @@
     components:{
     headerApp,
     footerApp
-    }
+    },
+    data() {
+        return {
+                full_name:'',
+                email:'',
+                subject:'',
+                content:'',
+        }
+    },
+     methods: {
+          send()
+          {
+            const formData = new FormData();
+            formData.append('full_name',this.full_name);
+            formData.append('email',this.email);
+            formData.append('subject', this.subject);
+            formData.append('content', this.content);
+            axios.post('/contactmail', formData).then((res) => {
+            this.message('top-end','success',res.data.message,false,1500);
+            })
+
+          }
+     },
     }
     </script>
 

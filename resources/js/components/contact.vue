@@ -7,7 +7,7 @@
     <div class="unit-5 overlay pt-0 ">
          <headerApp></headerApp>
             <br> <br> <br> <br> <br>
-      <div class="container text-center" style="z-index: 1 !important;"  >
+      <div class="container text-center content" style="z-index: 1 !important;"  >
         <h2 class="mb-0  brand">Contact Us</h2>
         <p class="mb-0 unit-6"><router-link to="/" class="text-info">Home</router-link> / <span>Contact</span></p>
       </div>
@@ -71,7 +71,7 @@
             <div class="p-4 mb-3 bg-white">
               <h3 class="h5 text-black mb-3">More Info</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa ad iure porro mollitia architecto hic consequuntur. Distinctio nisi perferendis dolore, ipsa consectetur</p>
-              <p><a href="#" class="btn btn-primary  py-2 px-4 rounded-0">Learn More</a></p>
+              <p><router-link to="/about" class="btn btn-primary shadow  py-2 px-4">Learn More</router-link></p>
             </div>
           </div>
         </div>

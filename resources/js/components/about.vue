@@ -6,14 +6,11 @@
         <!-- header -->
         <headerApp></headerApp>
         <br><br><br> <br><br> <br>
-      <div class="container text-center" style="z-index: 1 !important;"   >
+      <div class="container text-center content" style="z-index: 1 !important;"   >
         <h2 class="mb-0 brand">About Us</h2>
         <p class="mb-0 unit-6"><router-link to="/" class="text-info" >Home</router-link> / <span>About</span></p>
       </div>
     </div>
-
-
-
 
     <div class="site-section">
       <div class="container">
@@ -39,12 +36,12 @@
     </div>
     <!-- END section -->
 
-    <div class="site-section">
+    <div class="site-section" style="background-color: whitesmoke;">
       <div class="container">
         <div class="row justify-content-center mb-5">
           <div class="col-md-7 text-center">
             <h2 class="font-weight-bold text-black " data-aos="fade">Our Team</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum magnam illum maiores adipisci pariatur, eveniet.</p>
+
           </div>
         </div>
         <div class="row top-destination">
@@ -99,7 +96,7 @@
         <div class="row row-custom align-items-center">
           <div class="col-md-10">
             <h1 class="mb-2 text-black w-75">Get 40% Less For <span class="font-weight-bold">New Employer</span> Job Posts</h1>
-            <p class="h3"><a href="#" class="btn btn-primary py-3 px-5">Post a Job</a></p>
+            <p class="h3"><router-link to="/post" class="btn btn-primary py-3 px-5">Post a Job</router-link></p>
           </div>
         </div>
       </div>

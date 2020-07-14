@@ -11,14 +11,14 @@
             <div class="container " >
               <div class="row row-custom align-items-center ">
                 <div class="col-md-10">
-                  <h1 class="mb-2 text-white brand w-75 rounded-lg " ><span class="font-weight-bold ">Your Dream</span> <br> Job is Waiting</h1>
+                  <h1 class="mb-2 text-white brand w-75 rounded-lg content" ><span class="font-weight-bold ">Your Dream</span> <br> Job is Waiting</h1>
                   <div class="job-search">
                     <ul class="nav nav-pills mb-3 " id="pills-tab" role="tablist">
                       <li class="nav-item bg-white rounded-lg mr-2  ">
                         <a class="nav-link active py-3" id="pills-job-tab" data-toggle="pill" href="#pills-job" role="tab" aria-controls="pills-job" aria-selected="true">Find A Job</a>
                       </li>
-                      <li class="nav-item bg-white rounded-lg    ">
-                        <a class="nav-link py-3 " id="pills-candidate-tab" data-toggle="pill" href="#pills-candidate" role="tab" aria-controls="pills-candidate" aria-selected="false">Find A Candidate</a>
+                      <li class="nav-item bg-white rounded-lg">
+                        <router-link to="/post" class="nav-link py-3 " id="pills-candidate-tab" data-toggle="pill" role="tab" aria-controls="pills-candidate" aria-selected="false">Post a Job</router-link>
                       </li>
                     </ul>
                     <div class="tab-content bg-white p-3 p-md-4  rounded" id="pills-tabContent">
@@ -26,13 +26,13 @@
                         <form action="#" method="post">
                           <div class="row">
                             <div class="col-md-6 col-lg-3 mb-3 mb-lg-0">
-                              <input type="text" class="form-control shadow" placeholder="eg. Web Developer">
+                              <input type="text" class="form-control shadow" placeholder="job title">
                             </div>
                             <div class="col-md-6 col-lg-3 mb-3 mb-lg-0">
                               <div class="select-wrap">
                                 <span class="icon-keyboard_arrow_down arrow-down"></span>
                                 <select name="" id="" class="form-control shadow">
-                                  <option value="">Category</option>
+                                  <option value="">job type</option>
                                   <option value="fulltime">Full Time</option>
                                   <option value="fulltime">Part Time</option>
                                   <option value="freelance">Freelance</option>
@@ -50,34 +50,6 @@
                           </div>
                         </form>
                       </div>
-                      <div class="tab-pane fade" id="pills-candidate" role="tabpanel" aria-labelledby="pills-candidate-tab">
-                        <form action="#" method="post">
-                          <div class="row">
-                            <div class="col-md-6 col-lg-3 mb-3 mb-lg-0">
-                              <input type="text" class="form-control shadow" placeholder="eg. Carl Smith">
-                            </div>
-                            <div class="col-md-6 col-lg-3 mb-3 mb-lg-0">
-                              <div class="select-wrap">
-                                <span class="icon-keyboard_arrow_down arrow-down"></span>
-                                <select name="" id="" class="form-control shadow">
-                                  <option value="">Category</option>
-                                  <option value="fulltime">Full Time</option>
-                                  <option value="fulltime">Part Time</option>
-                                  <option value="freelance">Freelance</option>
-                                  <option value="internship">Internship</option>
-                                  <option value="internship">Termporary</option>
-                                </select>
-                              </div>
-                            </div>
-                            <div class="col-md-6 col-lg-3 mb-3 mb-lg-0">
-                              <input type="text" class="form-control form-control-block search-input shadow" id="autocomplete" placeholder="Location" onFocus="geolocate()">
-                            </div>
-                            <div class="col-md-6 col-lg-3 mb-3 mb-lg-0">
-                              <input type="submit" class="btn btn-primary btn-block shadow" value="Search">
-                            </div>
-                          </div>
-                        </form>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -86,24 +58,15 @@
     </div>
     </div>
 
-
-    <div class="site-section bg-light">
+    <div class="site-section bg-light pt-md-3">
         <br class="d-block  d-md-none  "> <br class=" d-block  d-md-none"> <br class="d-block  d-md-none">
       <div class="container">
-        <div class="row justify-content-start text-left mb-5">
-          <div class="col-md-9" data-aos="fade">
-            <h2 class="font-weight-bold text-black">Recent Jobs</h2>
-          </div>
-          <div class="col-md-3" data-aos="fade" data-aos-delay="200">
-            <a href="#" class="btn btn-primary py-3 shadow btn-block"><span class="h5">+</span> Post a Job</a>
-          </div>
-        </div>
          <!--all data -->
-                <div class="alldata">
+                <div class="alldata ">
                     <div class="row" data-aos="fade" v-for="getjob in getjobs.data" :key="getjob.id" @click="singleJob(getjob)" style="cursor: pointer;">
                         <div class="col-md-12">
-                          <div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
-                             <div class="mb-4 mb-md-0 mr-5">
+                          <div class="job-post-item bg-white rounded-lg  p-4 d-block d-md-flex align-items-center">
+                             <div class="mb-4  mb-md-0 mr-5">
                               <div class="job-post-item-header d-flex align-items-center">
                                 <h2 class="mr-3 text-dark h4"> <b>{{getjob.job_title}}</b> </h2>
                                 <div class="badge-wrap">
@@ -133,16 +96,12 @@
                         </div>
                        </div>
                 </div>
-
                 <!-- pagination -->
                <div class="row mt-5">
                   <div class="text-center col-md-12">
                     <pagination  :data="getjobs" @pagination-change-page="loadJobs"></pagination>
                   </div>
                 </div>
-
- 
-
       </div>
     </div>
     <div class="site-section">
@@ -271,7 +230,7 @@
 
 
 
-    <div class="site-section">
+    <div class="site-section" style="background: whitesmoke;">
       <div class="container">
         <div class="row justify-content-center text-center mb-5">
           <div class="col-md-6" data-aos="fade" >

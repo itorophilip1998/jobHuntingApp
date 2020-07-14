@@ -11,14 +11,22 @@ import jobs from '../js/components/jobs';
 import newpost from '../js/components/new-post';
 import Premium from '../js/components/premium';
 
+// Admin
+import Admin from '../js/components/admin/admin';
+import adminjobs from '../js/components/admin/jobs';
+import adminseekers from '../js/components/admin/seekers';
+import adminusers from '../js/components/admin/users';
+
 const routes = [
-        { path: '/',
+        {
+         path: '/',
          component: Home,
          meta: {
             auth: true,
             title: 'Home'
             }
         },
+
         {
             path: '/about',
             component: About,
@@ -73,22 +81,46 @@ const routes = [
          }
 
         },
+        {
+         path: '/dasboard',
+         component:Admin,
+         meta: {
+                auth: true,
+                title: 'Admin'
+         }
+        },
+        {
+         path: '/adminseekers',
+         component:adminseekers,
+         meta: {
+                auth: true,
+                title: 'seekers'
+         }
+        },
+        {
+         path: '/adminjobs',
+         component:adminjobs,
+         meta: {
+                auth: true,
+                title: 'jobs'
+         }
+        },
+        {
+         path: '/adminusers',
+         component:adminusers,
+         meta: {
+                auth: true,
+                title: 'users'
+         }
+        },
 
-        // Auth Routes
-        // { path: '/post',
-        //  component:newpost,
-        //  meta: {
-        //     auth: true,
-        //     title: 'Chat'
-        //   }
-        // }
 ]
 
 
 const router = new VueRouter({
     routes: routes,
     linkActiveClass: 'active',
-    mode: 'hash',
+    // mode: 'hash',
     hashbang: true,
     history: false,
 })

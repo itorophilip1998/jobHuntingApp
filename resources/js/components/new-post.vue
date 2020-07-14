@@ -6,7 +6,7 @@
         <!--header-->
         <headerApp></headerApp>
         <br><br><br><br><br>
-      <div class="container text-center" style="z-index: 1 !important;">
+      <div class="container text-center content" style="z-index: 1 !important;">
         <h2 class="mb-0 brand">Post a Job</h2>
         <p class="mb-0 unit-6"><router-link to="/" class="text-info">Home</router-link> / <span>Post a Job</span></p>
       </div>
@@ -37,20 +37,20 @@
               <div class="row form-group">
                 <div class="col-md-12 mb-3 mb-md-0">
                   <label class="font-weight-bold" for="fullname">Job Title <span class="text-danger">*</span> </label>
-                  <input v-model="job_title" required type="text" id="fullname" class="form-control" placeholder="eg. Full Stack Frontend">
+                  <input maxlength="50" v-model="job_title" required type="text" id="fullname" class="form-control" placeholder="eg. Full Stack Frontend">
                 </div>
               </div>
 
               <div class="row form-group ">
                 <div class="col-md-12 mb-3 mb-md-0">
                   <label class="font-weight-bold" for="fullname">Company email address  <span class="text-danger">*</span> </label>
-                  <input v-model="company_email"  type="email" id="fullname" class="form-control" placeholder="eg. youremail@domain.com" required>
+                  <input maxlength="50" v-model="company_email"  type="email" id="fullname" class="form-control" placeholder="eg. youremail@domain.com" required>
                 </div>
               </div>
               <div class="row form-group mb-5">
                 <div class="col-md-12 mb-3 mb-md-0">
                   <label class="font-weight-bold" for="fullname">Company <span class="text-danger">*</span> </label>
-                  <input v-model="company"  type="text" id="fullname" class="form-control" placeholder="eg. Facebook, Inc." required>
+                  <input maxlength="70" v-model="company"  type="text" id="fullname" class="form-control" placeholder="eg. Facebook, Inc." required>
                 </div>
               </div>
 
@@ -147,7 +147,7 @@
             <div class="p-4 mb-3 bg-white">
               <h3 class="h5 text-black mb-3">More Info</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa ad iure porro mollitia architecto hic consequuntur. Distinctio nisi perferendis dolore, ipsa consectetur</p>
-              <p><a href="#" class="btn btn-primary shadow py-2 px-4">Learn More</a></p>
+              <p><router-link to="/about" class="btn btn-primary shadow py-2 px-4 ">Learn More</router-link></p>
             </div>
           </div>
         </div>
@@ -197,7 +197,7 @@
             title: topic,
             showConfirmButton: btn,
             timer: time
-            }) 
+            })
             },
          freelance()
           {

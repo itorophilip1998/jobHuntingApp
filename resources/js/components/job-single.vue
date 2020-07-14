@@ -6,7 +6,7 @@
            <!-- header -->
           <headerApp></headerApp>
           <br><br><br><br><br>
-      <div class="container text-center" style="z-index: 1 !important;" >
+      <div class="container text-center content" style="z-index: 1 !important;" >
         <h2 class="mb-0 brand">{{job.job_title}}</h2>
         <p class="mb-0 unit-6"><router-link to="/" class="text-info">Home</router-link> / <router-link to="/jobs" class="text-info">Available Jobs</router-link> /  <span>{{job.job_title}}</span></p>
       </div>
@@ -196,7 +196,7 @@
             <div class="p-4 mb-3 bg-white shadow-sm ">
               <h3 class="h5 text-black mb-3">More Info</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa ad iure porro mollitia architecto hic consequuntur. Distinctio nisi perferendis dolore, ipsa consectetur</p>
-              <p><a href="#" class="btn btn-primary  py-2 px-4">learn more</a></p>
+              <p><router-link to="/about" class="btn btn-primary  py-2 px-4">learn more</router-link></p>
             </div>
           </div>
         </div>

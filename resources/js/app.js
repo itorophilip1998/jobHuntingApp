@@ -15,7 +15,8 @@ Vue.component('pagination', require('laravel-vue-pagination'));
 
 window.Vue = require('vue');
 Vue.component('main-app', require('./components/mainApp.vue').default);
+Vue.component('admin-app', require('./components/admin/admin.vue').default);
 const app = new Vue({
-    el: '#app',
+    el: '#app', 
     router
 });

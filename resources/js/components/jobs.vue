@@ -6,38 +6,23 @@
                 <headerApp></headerApp>
                 <br><br><br> <br><br> <br>
 
-              <div class="container  text-center" style="z-index: 1 !important;" >
-                <!-- search -->
-                <i style="left: -30px;bottom: -34px;position: relative;" class="fa fa-search" aria-hidden="true"></i>
-                <input class="form-control rounded-pill pr-5 mx-0 mx-md-5"  type="text" placeholder="Type a name" v-model="search" />
+              <div class="container content  text-center" style="z-index: 1 !important;" >
 
-                <h2 class="mb-0 brand">Available Jobs</h2>
+                <h2 class="mb-0 brand">Recent Jobs</h2>
                 <p class="mb-0 unit-6"><router-link to="/" class="text-info">Home</router-link> / <span>Jobs</span></p>
               </div>
             </div>
 
             <div class="site-section bg-light">
               <div class="container">
-                <div class="row justify-content-start text-left mb-5">
-                  <div class="col-md-9"  data-aos="fade">
-                    <span class="text-gray-500">Job type</span>
-                    <h2 class="font-weight-bold text-black">{{selected}}</h2>
-                  </div>
-
-                  <div class="col-md-3" data-aos="fade" data-aos-delay="200">
-                    <div class="select-wrap mr-auto">
-                      <span class="icon-keyboard_arrow_down arrow-down"></span>
-                      <select v-model="selected" name="" id="" class="form-control">
-                        <option  selected>Full Time</option>
-                        <option>Part Time</option>
-                        <option>Freelance</option>
-                        <option>Internship</option>
-                        <option>Termporary</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-
+                  <div class="row justify-content-start text-left mb-5">
+          <div class="col-md-9" data-aos="fade">
+            <h2 class="font-weight-bold text-black">Recent Jobs</h2>
+          </div>
+          <div class="col-md-3" data-aos="fade" data-aos-delay="200">
+            <router-link to="/post" class="btn btn-primary py-3 shadow btn-block"><span class="h5">+</span> Post a Job</router-link>
+          </div>
+        </div>
               <!--all data -->
                 <div class="alldata">
                     <div class="row" data-aos="fade" v-for="getjob in getjobs.data" :key="getjob.id" @click="singleJob(getjob)" style="cursor: pointer;">
@@ -104,7 +89,7 @@
         return {
             getjobs:{},
             selected:"Choose job type",
-            search: "",
+            // search: "",
 
         }
     },
@@ -124,11 +109,7 @@
     },
 },
 computed: {
- filteredBlogs() {
-    return this.jobs.filter((item)=>{
-    return item.job_title.match(this.search)
-})
-  },
+ 
  }
 }
 </script>
