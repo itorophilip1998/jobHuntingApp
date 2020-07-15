@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\ContactMails;
 use App\Mail\ContactMail;
 use Illuminate\Support\Facades\Mail;
 
@@ -19,12 +20,13 @@ class ContactMailController extends Controller
             'subject' => 'required',
             'content' => 'required'
         ]);
-        $data = array(
-           'full_name'=>$request->full_name,
-           'email'=>$request->email,
-           'subject'=>$request->subject,
-            'content'=>$request->content
-        );
+        $data = new ContactMails;
+        $data->full_name = $request->full_name;
+        $data->email = $request->email;
+        $data->subject = $request->subject;
+        $data->content = $request->content;
+        $data->save();
+
         Mail::to('godswillchuks4@gmail.com')->send(new ContactMail($data));   
         return back()->with('success','Mail sent successfully!');
         // return response()->json(['message'=>'Mail sent successfully!'], 200);

@@ -6,6 +6,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use App\User;
+use Auth;
 
 class JobMail extends Mailable
 {
@@ -17,7 +19,7 @@ class JobMail extends Mailable
      *
      * @return void
      */
-    public function __construct(array $data)
+    public function __construct($data)
     {
         return $this->data = $data;
     }
@@ -30,10 +32,12 @@ class JobMail extends Mailable
     public function build()
     {
         return $this->from($this->data['email'])->subject($this->data['subject'])
-        ->attach($this->data['attachment']->getRealPath(), array(
+        ->attach($this->data['attachment'], array(
             'as' => $this->data['attachment']->getClientOriginalName(),
             'mime' => $this->data['attachment']->getClientMimeType(),
         ))->view('beneficiary-wallet-funded')->with('data', $this->data);
+        // JobMail::insert($data);
+        // $data->save();
         // ->with('data', $data);
         // return response()->json( 200);
     }
