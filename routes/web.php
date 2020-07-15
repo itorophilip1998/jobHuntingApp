@@ -33,6 +33,18 @@ Route::get('/sendmail', 'ContactMailController@index');
 Route::post('/jobcv', 'JobMailController@jobcv');
 Route::get('/jobemail', 'JobMailController@index');
 
+Route::get('/admin', 'AdminController@admin');
+Route::get('/admin/allusers', 'AdminController@allUsers');
+Route::get('/admin/alljobs', 'AdminController@allJobs');
+
+Route::get('/admin/alljobseekers', 'AdminController@allJobSeekers');
+Route::get('/admin/allemployers', 'AdminController@allEmployers');
+
+Route::get('/admin/allcontactmails', 'AdminController@allContactMails');
+Route::get('/admin/alljobmails', 'AdminController@allJobMails');
+
+Route::get('/admin/adminprofile', 'AdminController@adminProfile');
+
 //JobSeeker
 // Route::post('postseekerprofile', 'SeekerProfileController@create');
 

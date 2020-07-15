@@ -44,4 +44,8 @@ class User extends Authenticatable
         $this->hasMany(Job::class);
     }
 
+    public function jobmail(){
+        $this->hasMany(JobMail::class);
+    }
+
 }
