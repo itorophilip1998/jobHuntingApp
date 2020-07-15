@@ -23,7 +23,7 @@
     {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
 </head>
     <body>
-        <div id="app">
+        <div id="app2">
             <admin-app></admin-app>
        </div>
 

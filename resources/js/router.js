@@ -89,7 +89,7 @@ const routes = [
 
         // Admin
         {
-         path: '/',
+         path: '/dashboard',
          component:Admin,
          meta: {
                 auth: true,
