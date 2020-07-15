@@ -14,6 +14,8 @@ class HomeController extends Controller
     {
         return view('welcome');
     }
+     
+
     public function user()
     {
     if(Auth::check()){

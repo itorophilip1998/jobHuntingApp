@@ -19,7 +19,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/user', 'HomeController@user');
 Route::get('/', 'WelcomeController@index');
-Route::get('/admin', 'WelcomeController@admin');
+Route::get('/adminuser', 'WelcomeController@getadmin');
 
 Route::post('/postprofile', 'ProfileController@create');
 Route::get('/getjobs', 'JobController@index');

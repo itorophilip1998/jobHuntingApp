@@ -207,7 +207,7 @@
             },
             admin()
             {
-             window.location=(`/admin`);
+             window.location=(`/adminuser`);
             }
         }
     }
