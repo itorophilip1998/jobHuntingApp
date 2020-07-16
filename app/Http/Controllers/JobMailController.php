@@ -35,10 +35,7 @@ class JobMailController extends Controller
         $data->to = $request->to;
         $data->user_id = Auth::user()->id;
         $data->save();
-        
-
         Mail::to($request->to)->send(new JobMail($data));
-        return back()->with('success','Mail sent successfully!');
-        // return response()->json(['message','Mail sent successfully!'], 200);
+        return response()->json(['message'=>'Mail sent successfully!',$data ], 200); 
     }
 }

@@ -131,9 +131,14 @@
                   </div>
                 </ul>
               </div>
+
         </div>
       </div>
+      <div class="text-center bg-secondary text-white">
+                   2020 <i class="fa fa-copyright" aria-hidden="true"></i>  Jobstart version:1.0 @ jobstart.com
+              </div>
     </footer>
+
      </div>
  </template>
 
@@ -200,6 +205,10 @@
             formData.append('password', this.password);
             formData.append('role', this.role);
               axios.post('/register',formData).then((res) => {
+                      axios.get('/user')
+                .then((res) => {
+                 this.user = res.data
+       });
                  this.message('top-end','success','Signup successfully',false,1500);
               }).catch((err) => {
                 this.message('top-end','error','incorrect details',false,1500);

@@ -32,11 +32,10 @@ class ContactMail extends Mailable
      */
     public function build()
     {
-        return $this->from($this->data['email'])
+        $mail= $this->from($this->data['email'])
         ->subject($this->data['subject'])
         ->with('data', $this->data)
         ->view('beneficiary-wallet-funded')->with('data', $this->data);
-        return response()->json( 200);
-        return $this->view('view.name');
+        return response()->json(['message'=>'Mail sent successfully!',$mail], 200);
     }
 }

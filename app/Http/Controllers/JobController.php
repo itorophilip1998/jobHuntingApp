@@ -53,9 +53,9 @@ class JobController extends Controller
         $job->salary_range = $request->input('salary_range');
         $job->company_email = $request->input('company_email');
         $job->user_id = Auth::user()->id;
-        $job->save(); 
+        $job->save();
         return response()->json([
-            "message" => "job updated",
+            "message" => "job created",
             $job
         ], 200);
 
@@ -139,7 +139,6 @@ class JobController extends Controller
         $job->salary_range = $request->input('salary_range');
         $job->company_email = $request->input('company_email');
         $job->user_id = Auth::user()->id;
-
         $job->save();
 
         return response()->json([

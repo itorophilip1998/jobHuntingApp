@@ -22,7 +22,7 @@
                       </li>
                       <li><router-link to="/premium" >Premium</router-link></li>
                       <li><router-link to="/about" >About</router-link></li>
-                      <li><router-link to="/contact" >Contact</router-link></li>
+                      <li><router-link to="/contact" >Contact Us</router-link></li>
                       <li>
                           <router-link to="/jobs" class="rounded bg-primary py-1 px-3  shadow" >Want Job</router-link>
                           <router-link to="/post" class="rounded bg-secondary py-1 px-3  shadow">Post Job</router-link>
@@ -59,7 +59,7 @@
                         </div>
                     <li><router-link @click="cancel()" class="link" to="/premium" > <i class="fa fa-money" aria-hidden="true"></i> Premium</router-link></li>
                     <li><router-link @click="cancel()" class="link" to="/about" > <i class="fa fa-info-circle" aria-hidden="true"></i> About</router-link></li>
-                    <li><router-link @click="cancel()" class="link" to="/contact" > <i class="fa fa-phone" aria-hidden="true"></i> Contact</router-link></li>
+                    <li><router-link @click="cancel()" class="link" to="/contact" > <i class="fa fa-phone" aria-hidden="true"></i> Contact Us</router-link></li>
                     <li><router-link @click="cancel()" class="link" to="/jobs"><i class="fa fa-user-o" aria-hidden="true"></i> Want Job</router-link>   </li>
                     <li><router-link @click="cancel()" class="link" to="/post"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Post Job</router-link></li>
                   </ul>

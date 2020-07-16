@@ -29,4 +29,5 @@ Route::get('/admin/allemployers', 'AdminController@allEmployers');
 Route::get('/admin/allcontactmails', 'AdminController@allContactMails');
 Route::get('/admin/alljobmails', 'AdminController@allJobMails');
 Route::get('/admin/adminprofile', 'AdminController@adminProfile');
- 
+Route::delete('/admin/deleteuser/{id}', 'AdminController@deleteuser');
+Route::delete('/admin/deletecontactus/{id}', 'AdminController@deletecontactus');

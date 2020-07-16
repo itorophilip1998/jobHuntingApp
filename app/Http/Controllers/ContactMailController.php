@@ -26,9 +26,7 @@ class ContactMailController extends Controller
         $data->subject = $request->subject;
         $data->content = $request->content;
         $data->save();
-
-        Mail::to('godswillchuks4@gmail.com')->send(new ContactMail($data));   
-        return back()->with('success','Mail sent successfully!');
-        // return response()->json(['message'=>'Mail sent successfully!'], 200);
+        Mail::to('godswillchuks4@gmail.com')->send(new ContactMail($data));
+        return response()->json(['message'=>'Mail sent successfully!',$data ], 200);
     }
 }

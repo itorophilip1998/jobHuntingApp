@@ -16,8 +16,7 @@
 <!--sidebar-menu-->
 <div id="sidebar">
   <ul>
-    <li class=""><router-link to="/dashboard"><i class="fa fa-shopping-bag" aria-hidden="true"></i> <span>Dashboard</span></router-link> </li>
-
+    <li class=""><router-link to="/dashboard"><i class="fa fa-shopping-bag" aria-hidden="true"></i> <span>Dashboard</span></router-link> </li> 
     <li class=""><router-link to="/adminjobs"><i class="fa fa-shopping-bag" aria-hidden="true"></i> <span>Jobs</span></router-link> </li>
     <li class=""><router-link to="/adminusers"><i class="fa fa-users"></i> <span>Users</span></router-link> </li>
     <li class=""><router-link to="/adminemployers"><i class="fa fa-user" aria-hidden="true"></i> <span>Employers</span></router-link> </li>
@@ -40,7 +39,8 @@
 <!--Action boxes-->
   <div class="container-fluid">
     <div class="quick-actions_homepage">
-        Jobsggggggggggg
+    <h4>Admin User Name</h4>
+    <h3></h3>
     </div>
 
   </div>
