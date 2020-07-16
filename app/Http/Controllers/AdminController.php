@@ -71,4 +71,10 @@ class AdminController extends Controller
         $user->delete();
         return response()->json(['message'=>'Successfully deleted'], 200);
     }
+    public function changepassword(Request $request,$id){
+        dd($request->all());
+        $user=ContactMails::find($id);
+        $user->delete();
+        return response()->json(['message'=>'Successfully deleted'], 200);
+    }
 }

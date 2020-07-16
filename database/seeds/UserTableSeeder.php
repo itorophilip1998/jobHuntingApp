@@ -18,7 +18,7 @@ class UserTableSeeder extends Seeder
               'name' => 'Admin1',
               'email' => 'admin1@jobstart.com',
               'password' => Hash::make('admin1passing6789054321'),
-              'role' => 'admin',
+              'role' => 'admin', 
             ),
             array(
               'name' => 'Admin2',
