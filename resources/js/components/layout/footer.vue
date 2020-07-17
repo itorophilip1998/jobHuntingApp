@@ -18,7 +18,7 @@
 <button data-toggle="modal" data-target="#login"  class="bg-secondary text-white shadow w-50 btn-sm btn mb-2" >Login</button>
 <button data-toggle="modal" data-target="#signup"    class="shadow bg-white  w-50 btn-sm btn mb-2 " >Signup</button>
    <h6 class="text-center w-50" >OR</h6>
-<button data-toggle="modal" data-target="#signup"    class="shadow btn-primary    w-50 btn-sm btn" >Login with facebook <i class="fa fa-facebook" aria-hidden="true"></i> </button>
+<button data-toggle="modal" data-target="#modelId"    class="shadow btn-primary    w-50 btn-sm btn" >Login As Admin <i class="fa fa-user" aria-hidden="true"></i></button>
 </div>
 
  </div>
@@ -104,7 +104,6 @@
                     <h5>
                   <li><router-link to="about"><i class="fa fa-users" aria-hidden="true"></i> About</router-link></li>
                   <li><router-link to="contact"><i class="fa fa-phone" aria-hidden="true"></i> Contact Us</router-link></li>
-                  <li><a  class="btn btn-dark" data-toggle="modal" data-target="#modelId">Admin</a></li>
                 </h5>
 
                   <!--Admin Modal -->
@@ -116,11 +115,11 @@
                                     <h2>Admin Login</h2>
                                     <div class="form-group">
                                       <label for="exampleInputEmail1">Email address</label>
-                                      <input type="email" v-model="loginEmail"  class="form-control py-1" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                                      <input type="email" v-model="adminEmail"  class="form-control py-1" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
                                     </div>
                                     <div class="form-group">
                                       <label for="exampleInputPassword1">Password</label>
-                                      <input type="password" v-model="loginPassword"  class="form-control py-1" id="exampleInputPassword1" placeholder="Password">
+                                      <input type="password" v-model="adminPassword"  class="form-control py-1" id="exampleInputPassword1" placeholder="Password">
                                     </div>
                                     <button type="submit" class="btn  shadow btn-primary">login</button>
                                     <button data-dismiss="modal" type="submit" class="btn shadow ">Close</button>
@@ -143,8 +142,13 @@
  </template>
 
 <script>
+    import facebookLogin from 'facebook-login-vuejs'
     import Swal from 'sweetalert2'
     export default {
+        components:
+        {
+            facebookLogin
+        },
         data() {
             return {
                 user:{},
@@ -154,6 +158,13 @@
                 email:'',
                 password:'',
                 role:'',
+                adminEmail:'',
+                adminPassword:'',
+                isConnected: false,
+                personalID: '',
+                picture: '',
+                FB: undefined,
+
             }
         },
         mounted() {
@@ -163,6 +174,29 @@
        });
         },
         methods: {
+            getUserData() {
+    this.FB.api('/me', 'GET', { fields: 'id,name,email,picture' },
+      user => {
+        this.personalID = user.id;
+        this.email = user.email;
+        this.name = user.name;
+        this.picture = user.picture.data.url;
+      }
+    )
+  },
+  sdkLoaded(payload) {
+    this.isConnected = payload.isConnected
+    this.FB = payload.FB
+    if (this.isConnected) this.getUserData()
+  },
+  onLogin() {
+    this.isConnected = true
+    this.getUserData()
+  },
+  onLogout() {
+    this.isConnected = false;
+  },
+
             message(place,logo,topic,btn,time){
             Swal.fire({
             position: place,
@@ -182,7 +216,7 @@
                  this.message('top-end','success','logout successfully',false,1500);
               })
             },
-        login()
+           login()
             {
             const formData = new FormData();
             formData.append('email',this.loginEmail);
@@ -208,16 +242,28 @@
                       axios.get('/user')
                 .then((res) => {
                  this.user = res.data
-       });
+            });
                  this.message('top-end','success','Signup successfully',false,1500);
+              }).catch((err) => {
+                this.message('top-end','error','incorrect details',false,1500);
+            });
+            },
+            admin()
+            {
+            const formData = new FormData();
+            formData.append('email',this.adminEmail);
+            formData.append('password', this.adminPassword);
+              axios.post('/admin/login')
+              axios.post('/login',formData).then((res) => {
+                axios.get('/user')
+                .then((res) => {
+                 this.user = res.data
+                });
+                 this.message('top-end','success','login successfully',false,1500);
               }).catch((err) => {
                 this.message('top-end','error','incorrect details',false,1500);
         });
             },
-            admin()
-            {
-             window.location=(`/adminuser`);
-            }
         }
     }
 </script>

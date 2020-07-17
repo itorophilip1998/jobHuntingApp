@@ -125,7 +125,9 @@
                 <h2 class="h5">Search Millions of Jobs</h2>
               </div>
               <div class="unit-3-body">
-                <p>Lorem ipsum dolor sit amet consectetur is a nice adipisicing elita ssumenda a similique perferendis dolorem eos.</p>
+                <p>
+                     With more than 25 million jobs listed on Indeed, a great job description can help your jobs stand out from the rest.
+                   </p>
               </div>
             </div>
 
@@ -143,7 +145,7 @@
                 <h2 class="h5">Location Search</h2>
               </div>
               <div class="unit-3-body">
-                <p>Lorem ipsum dolor sit amet consectetur is a nice adipisicing elita ssumenda a similique perferendis dolorem eos.</p>
+                <p>It does not matter where you are living or where you want to apply for the job,We locate you to the job,where you like</p>
               </div>
             </div>
 
@@ -158,10 +160,10 @@
                     <path fill-rule="evenodd" stroke-width="2px" stroke-linecap="butt" stroke-linejoin="miter" fill="none" d="M29.000,66.000 L1.012,49.750 L1.012,17.250 L29.000,1.000 L56.988,17.250 L56.988,49.750 L29.000,66.000 Z"></path>
                   </svg><span class="unit-3-icon icon fl-bigmug-line-airplane86"></span>
                 </div>
-                <h2 class="h5">Top Careers</h2>
+                <h2 class="h5">Post Jobs</h2>
               </div>
               <div class="unit-3-body">
-                <p>Lorem ipsum dolor sit amet consectetur is a nice adipisicing elita ssumenda a similique perferendis dolorem eos.</p>
+                <p>We create awarness to the jobseekers,by allowing an employer who need employees to post jobs for jobseekers to apply.</p>
               </div>
             </div>
 
@@ -177,10 +179,10 @@
                     <path fill-rule="evenodd" stroke-width="2px" stroke-linecap="butt" stroke-linejoin="miter" fill="none" d="M29.000,66.000 L1.012,49.750 L1.012,17.250 L29.000,1.000 L56.988,17.250 L56.988,49.750 L29.000,66.000 Z"></path>
                   </svg><span class="unit-3-icon icon fl-bigmug-line-user144"></span>
                 </div>
-                <h2 class="h5">Search Expert Candidates</h2>
+                <h2 class="h5">Premium Users</h2>
               </div>
               <div class="unit-3-body">
-                <p>Lorem ipsum dolor sit amet consectetur is a nice adipisicing elita ssumenda a similique perferendis dolorem eos.</p>
+                <p>An employer or jobseeker is limited to post/apply jobs five(5) times, but when you go premium you can post/apply Millions of jobs</p>
               </div>
             </div>
 
@@ -198,7 +200,7 @@
                 <h2 class="h5">Easy To Manage Jobs</h2>
               </div>
               <div class="unit-3-body">
-                <p>Lorem ipsum dolor sit amet consectetur is a nice adipisicing elita ssumenda a similique perferendis dolorem eos.</p>
+                <p>Crafting a compelling job description is essential to helping you attract the most qualified candidates for your job</p>
               </div>
             </div>
 
@@ -216,7 +218,7 @@
                 <h2 class="h5">Online Reviews</h2>
               </div>
               <div class="unit-3-body">
-                <p>Lorem ipsum dolor sit amet consectetur is a nice adipisicing elita ssumenda a similique perferendis dolorem eos.</p>
+                <p>Your job descriptions are where you start marketing your company and your job to your future hire</p>
               </div>
             </div>
 

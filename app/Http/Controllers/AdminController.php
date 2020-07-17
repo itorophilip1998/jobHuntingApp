@@ -14,9 +14,15 @@ use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
+
     public function admin()
     {
+        if(Auth::check() && Auth::user()->role=='admin'){
         return view('admin');
+        }
+        else{
+            abort(404, 'Page not found');
+            }
 
     }
 
@@ -77,4 +83,14 @@ class AdminController extends Controller
         $user->delete();
         return response()->json(['message'=>'Successfully deleted'], 200);
     }
+    public function login(Request $request){
+        if(Auth::check())
+        {
+            Auth::logout();
+        }
+        return response()->json(['message'=>'Successfully logout'], 200);
+
+    }
+
+
 }

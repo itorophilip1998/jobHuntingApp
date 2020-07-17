@@ -46,7 +46,7 @@
             <li class="bg_ls span3"> <router-link class="quick-link"  to="/adminapplyjobs"> <i class="fa fa-envelope-open fa-5x  "></i> <br> Apply Job Mails</router-link> </li>
             <li class="bg_lb span3"> <router-link class="quick-link"  to="/adminprofile"> <i class="fa fa-user-circle-o fa-5x"></i> <br>Pofile</router-link> </li>
             <li class="bg_lg span3"> <router-link class="quick-link"  to="/adminpayment"> <i class="fa fa-credit-card  fa-5x "></i> <br> payment</router-link> </li>
-            <li class="bg_lr span3"> <a  class="quick-link"> <i class="fa fa-long-arrow-right fa-5x "></i> <br> Logout</a> </li>
+            <li class="bg_lr span3"> <a @click="logout()" class="quick-link"> <i class="fa fa-long-arrow-right fa-5x "></i> <br> Logout</a> </li>
 
       </ul>
     </div>
@@ -79,7 +79,12 @@
         }
     },
      methods: {
-
+ logout(){
+          axios.post('/logout').then((res) => {
+                 this.message('top-end','success','logout successfully',false,1500);
+                 window.location.reload()
+              })
+         },
      },
     }
     </script>

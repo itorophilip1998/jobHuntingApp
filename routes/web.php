@@ -32,3 +32,4 @@ Route::get('/admin/adminprofile', 'AdminController@adminProfile');
 Route::delete('/admin/deleteuser/{id}', 'AdminController@deleteuser');
 Route::delete('/admin/deletecontactus/{id}', 'AdminController@deletecontactus');
 Route::put('/admin/changepassword/{id}', 'AdminController@changepassword');
+Route::post('/admin/login', 'AdminController@login');
