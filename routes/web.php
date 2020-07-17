@@ -31,4 +31,7 @@ Route::get('/admin/alljobmails', 'AdminController@allJobMails');
 Route::get('/admin/adminprofile', 'AdminController@adminProfile');
 Route::delete('/admin/deleteuser/{id}', 'AdminController@deleteuser');
 Route::delete('/admin/deletecontactus/{id}', 'AdminController@deletecontactus');
-Route::put('/admin/changepassword/{id}', 'AdminController@changepassword');
+// Route::put('/admin/changepassword/{id}', 'AdminController@changepassword');
+
+Route::get('/admin/changepassword', 'AdminController@changepassword');
+Route::post('/admin/passwordchanged', 'AdminController@passwordchanged');
