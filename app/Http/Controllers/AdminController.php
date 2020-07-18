@@ -15,7 +15,7 @@ use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
-{ 
+{
 
     public function admin()
     {
@@ -86,8 +86,7 @@ class AdminController extends Controller
     }
 
     public function passwordchanged(Request $request)
-    {
-        // dd($request->all());
+    { 
         $request->validate([
             'current_password' => ['required', new MatchOldPassword],
             'new_password' => ['required','string','min:10','max:15','regex:/[a-z]/','regex:/[A-Z]/','regex:/[0-9]/','regex:/[@$!%*#?&]/',],
