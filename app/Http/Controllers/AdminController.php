@@ -89,7 +89,7 @@ class AdminController extends Controller
     {
         $request->validate([
             'current_password' => ['required', new MatchOldPassword],
-            'new_password' => ['required'],
+            'new_password' => ['required','string','min:10','max:15','regex:/[a-z]/','regex:/[A-Z]/','regex:/[0-9]/','regex:/[@$!%*#?&]/',],
             'new_confirm_password' => ['same:new_password'],
         ]);
    
