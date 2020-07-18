@@ -133,12 +133,11 @@
         changePassword(id)
         {
             const formData = new FormData();
-            formData.append('oldpassword',this.oldpassword);
-            formData.append('newpassword',this.newpassword);
-            formData.append('confirmpassword', this.confirmpassword);
+            formData.append('current_password',this.oldpassword);
+            formData.append('new_password',this.newpassword);
+            formData.append('new_confirm_password', this.confirmpassword);
             formData.append('admin_id', id);
-            formData.append('_method', 'PUT');
-            axios.post(`/admin/changepassword/${id}`, formData).then((res) => {
+            axios.post(`/admin/passwordchanged`, formData).then((res) => {
             this.message('top-end','success',res.data.message,false,1500);
             })
         },
@@ -173,7 +172,7 @@
     }
     </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .fa-5x
 {
     color: whitesmoke !important;

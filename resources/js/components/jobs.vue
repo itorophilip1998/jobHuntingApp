@@ -44,17 +44,17 @@
                                 </div>
                               </div>
                               <div class="job-post-item-body d-block d-md-flex">
-                                <div class="mr-3"><span class="fl-bigmug-line-portfolio23"></span> <a href="#">{{getjob.company}}</a></div>
+                                <div class="mr-3"><span class="fl-bigmug-line-portfolio23 "></span> <a href="#">{{getjob.company}}</a></div>
                                 <div><span class="fl-bigmug-line-big104"></span> <span>{{getjob.location}}</span></div>
                               </div>
                              </div>
-
                              <div class="ml-auto">
-                               <a href="#" class="btn btn-secondary rounded-circle btn-favorite text-gray-500"><span class="icon-heart"></span></a>
+                                    <!-- <a  title="You have not Apply for the Job yet" href="#" class="text-white btn btn-danger rounded-circle btn-favorite"><span class="icon-heart"></span></a> -->
+                                    <a    title="You have Apply for the Job" href="#" class="btn btn-secondary rounded-circle btn-favorite text-gray-500"><span class="icon-heart"></span></a>
+
                                <a href="#" class="btn btn-primary py-2">Apply Job</a>
                              </div>
                           </div>
-
                         </div>
                        </div>
                 </div>
@@ -89,12 +89,21 @@
         return {
             getjobs:{},
             selected:"Choose job type",
-            // search: "",
+            user: {},
+            auth: {},
 
         }
     },
     mounted() {
         this.loadJobs();
+         axios.get('/admin/alljobmails?page=1')
+                .then((res) => {
+                 this.user = res.data
+          });
+         axios.get('/user')
+                .then((res) => {
+                 this.auth = res.data
+          });
     },
     methods: {
         singleJob(getjob)
@@ -109,7 +118,7 @@
     },
 },
 computed: {
- 
+
  }
 }
 </script>

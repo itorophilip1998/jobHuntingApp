@@ -176,7 +176,7 @@
     }
     </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .fa-5x
 {
     color: whitesmoke !important;

@@ -54,7 +54,7 @@
             </form>
           </div>
 
-          <div class="col-lg-4">
+          <div class="col-lg-4 d-none d-md-block">
             <div class="p-4 mb-3 bg-white">
               <h3 class="h5 text-black mb-3">Contact Info</h3>
               <p class="mb-0 font-weight-bold">Address</p>

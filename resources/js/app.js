@@ -12,7 +12,8 @@ require('vue-flash-message/dist/vue-flash-message.min.css');
 import VueFlashMessage from 'vue-flash-message';
 Vue.use(VueFlashMessage);
 Vue.component('pagination', require('laravel-vue-pagination'));
-
+import VueScrollTo from 'vue-scrollto'
+Vue.use(VueScrollTo)
 window.Vue = require('vue');
 Vue.component('main-app', require('./components/mainApp.vue').default);
 Vue.component('admin-app', require('./components/admin/index.vue').default);

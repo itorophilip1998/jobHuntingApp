@@ -11,9 +11,11 @@ use App\Mail\ContactMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Rules\MatchOldPassword;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
-{
+{ 
 
     public function admin()
     {
@@ -22,7 +24,7 @@ class AdminController extends Controller
         }
         else{
             abort(404, 'Page not found');
-            }
+        }
 
     }
 
@@ -77,11 +79,24 @@ class AdminController extends Controller
         $user->delete();
         return response()->json(['message'=>'Successfully deleted'], 200);
     }
-    public function changepassword(Request $request,$id){
-        dd($request->all());
-        $user=ContactMails::find($id);
-        $user->delete();
-        return response()->json(['message'=>'Successfully deleted'], 200);
+
+    public function changepassword()
+    {
+        return view('changepassword');
+    }
+
+    public function passwordchanged(Request $request)
+    {
+        // dd($request->all());
+        $request->validate([
+            'current_password' => ['required', new MatchOldPassword],
+            'new_password' => ['required'],
+            'new_confirm_password' => ['same:new_password'],
+        ]);
+
+        User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
+
+        return response()->json('password changed successfully', 200);
     }
     public function login(Request $request){
         if(Auth::check())
@@ -94,3 +109,4 @@ class AdminController extends Controller
 
 
 }
+

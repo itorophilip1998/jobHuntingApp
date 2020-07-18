@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Job;
 
 class JobMails extends Model
 {
@@ -11,4 +12,9 @@ class JobMails extends Model
     public function user(){
         $this->belongsTo(User::class);
     }
+    // public function jobs(){
+    //     $this->belongsTo(Job::class);
+    // }
+
+
 }

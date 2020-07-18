@@ -10,7 +10,14 @@
 @import './font-awesome-4.7.0/css/font-awesome.min.css';
 @import '/node_modules/vue-flash-message/dist/vue-flash-message.min.css';
 
-.heading{ 
+.zoom:hover {
+    transition: transform 300ms ease-in-out;
+    transform: translate(30px, 10px) rotate(2deg);
+}
+.zoom {
+    cursor: pointer;
+}
+.heading{
     position: relative;
     animation: heading;
     animation-duration: 3s;
@@ -32,7 +39,10 @@
     animation-duration: 3s;
     animation-fill-mode: forwards;
 }
-
+.url:hover
+{
+    background: rgba(0,0,0,0.2);
+}
 @keyframes content {
     0% {
         left: -1000px;
