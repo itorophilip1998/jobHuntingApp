@@ -12991,6 +12991,15 @@ a:hover {
   color: #ccc;
 }
 
+.zoom:hover {
+  transition: transform 300ms ease-in-out;
+  transform: translate(30px, 10px) rotate(2deg);
+}
+
+.zoom {
+  cursor: pointer;
+}
+
 .heading {
   position: relative;
   -webkit-animation: heading;
@@ -13029,6 +13038,10 @@ a:hover {
           animation-duration: 3s;
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards;
+}
+
+.url:hover {
+  background: rgba(0, 0, 0, 0.2);
 }
 
 @-webkit-keyframes content {

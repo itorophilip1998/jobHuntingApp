@@ -26,7 +26,8 @@
     <li class=""><router-link to="/adminapplyjobs"><i class="fa fa-envelope-open" aria-hidden="true"></i> <span>Apply Job Mails</span></router-link> </li>
     <li class=""><router-link to="/adminprofile"><i class="fa fa-user-circle-o" aria-hidden="true"></i> <span>Profile</span></router-link> </li>
     <li class=""><router-link to="/adminpayment"><i class="fa fa-credit-card" aria-hidden="true"></i> <span>Payment</span></router-link> </li>
-    <li class=""><a><i class="fa fa-long-arrow-right" aria-hidden="true"></i><span>Logout</span></a> </li>
+    <li class=""><a @click="logout()"><i class="fa fa-long-arrow-right" aria-hidden="true" style="cursor: pointer;"></i><span>Logout</span></a> </li>
+
   </ul>
 </div>
 <!--sidebar-menu-->
@@ -145,6 +146,12 @@
         this.loadUser();
     },
      methods: {
+        logout(){
+          axios.post('/logout').then((res) => {
+                 this.message('top-end','success','logout successfully',false,1500);
+                 window.location.reload()
+              })
+         },
         message(place,logo,topic,btn,time){
             Swal.fire({
             position: place,
@@ -176,7 +183,7 @@
     }
     </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .fa-5x
 {
     color: whitesmoke !important;

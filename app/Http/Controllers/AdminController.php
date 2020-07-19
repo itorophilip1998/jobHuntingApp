@@ -15,16 +15,16 @@ use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
-{   
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-   
+{
 
     public function admin()
     {
+        if(Auth::check() && Auth::user()->role=='admin'){
         return view('admin');
+        }
+        else{
+            abort(404, 'Page not found');
+        }
 
     }
 
@@ -83,18 +83,29 @@ class AdminController extends Controller
     public function changepassword()
     {
         return view('changepassword');
-    } 
+    }
 
     public function passwordchanged(Request $request)
-    {
+    { 
         $request->validate([
             'current_password' => ['required', new MatchOldPassword],
             'new_password' => ['required','string','min:10','max:15','regex:/[a-z]/','regex:/[A-Z]/','regex:/[0-9]/','regex:/[@$!%*#?&]/',],
             'new_confirm_password' => ['same:new_password'],
         ]);
-   
+
         User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
-            
+
         return response()->json('password changed successfully', 200);
     }
+    public function login(Request $request){
+        if(Auth::check())
+        {
+            Auth::logout();
+        }
+        return response()->json(['message'=>'Successfully logout'], 200);
+
+    }
+
+
 }
+

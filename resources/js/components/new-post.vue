@@ -12,25 +12,64 @@
       </div>
     </div>
 
-
-
-
     <div class="site-section bg-light">
       <div class="container">
         <div class="row">
-
           <div class="col-md-12 col-lg-8 mb-5">
             <form @submit.prevent="post()" class="p-5 bg-white">
-
               <div class="row form-group">
                 <div class="col-md-12 mb-3 mb-md-0">
                   <label class="font-weight-bold" for="fullname">Salary Range</label> <br>
-                    <select v-model="salary_range" class="form-control"  name="" id="">
-                      <option>From <b>&#8358;</b>10,000  to  <b>&#8358;</b>49,000</option>
-                      <option>From <b>&#8358;</b>50,000  to  <b>&#8358;</b>99,000</option>
-                      <option>From <b>&#8358;</b>100,000  to  <b>&#8358;</b>500,000</option>
-                      <option><b>&#8358;</b>500,000 and above</option>
+<div class="row">
+    <div class="col-3">
+        <label for="">Currency</label>
+        <select v-model="countryM" class="form-control"  name="" id="">
+                      <option><b>₦</b></option>
+                      <option><b>$</b></option>
+                      <option><b>€</b></option>
+                      <option><b>₨</b></option>
+                      <option><b>₿</b></option>
+                      <option><b>₼</b></option>
+                      <option><b>₽</b></option>
+                      <option><b>₾</b></option>
+                      <option><b>₶</b></option>
+                      <option><b>₻</b></option>
+                      <option><b>₹</b></option>
+                      <option><b>௹</b></option>
+                      <option><b>₮</b></option>
+                      <option><b>¥</b></option>
+                      <option><b>₳</b></option>
+                      <option><b>₸</b></option>
+                      <option><b>৳</b></option>
+                      <option><b>֏</b></option>
+                      <option><b>₣</b></option>
+                      <option><b>₲</b></option>
+                      <option><b>₫</b></option>
+                      <option><b>₱</b></option>
+                      <option><b>₭</b></option>
+                      <option><b>₰</b></option>
+                      <option><b>₪</b></option>
+                      <option><b>₺</b></option>
+                      <option><b>₷</b></option>
+                      <option><b>₠</b></option>
+                      <option><b>﷼</b></option>
+                      <option><b>៛</b></option>
+                      <option><b>૱</b></option>
+                      <option><b>₴</b></option> 
                     </select>
+    </div>
+    <div class="col-9">
+        <label for="">Salary</label>
+        <select v-model="salary_range" class="form-control"  name="" id="">
+                      <option>10,000  to  50,000</option>
+                      <option>50,000  to  100,000</option>
+                      <option>100,000  to 500,000</option>
+                      <option>500,000 and above</option>
+                    </select>
+    </div>
+
+</div>
+
                 </div>
               </div>
 
@@ -130,7 +169,7 @@
             </form>
           </div>
 
-          <div class="col-lg-4">
+          <div class="col-lg-4 d-none d-md-block">
             <div class="p-4 mb-3 bg-white">
               <h3 class="h5 text-black mb-3">Contact Info</h3>
               <p class="mb-0 font-weight-bold">Address</p>
@@ -171,6 +210,7 @@
     },
     data() {
         return {
+                countryM:'',
                 salary_range:'',
                 job_title:'',
                 company:'',
@@ -224,7 +264,7 @@
           post()
           {
             const formData = new FormData();
-            formData.append('salary_range',this.salary_range);
+            formData.append('salary_range',this.countryM +" "+ this.salary_range);
             formData.append('job_title',this.job_title);
             formData.append('company', this.company);
             formData.append('location', this.location);
