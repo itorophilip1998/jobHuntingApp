@@ -22,9 +22,11 @@ class CreateJobmailsTable extends Migration
             $table->string('attachment');
             $table->string('to');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('job_mails_id');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('job_mails_id')->references('id')->on('job_mails');
         });
     }
 
