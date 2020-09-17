@@ -12,15 +12,7 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <head>
-        <title>Jobstart &mdash; Colorlib Website Template</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900|Roboto+Mono:300,400,500">
-
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> 
 
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('frontend/css/open-iconic-bootstrap.min.css') }}">
@@ -41,6 +33,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/fl-bigmug-line.css')}}">
     <link rel="stylesheet" href="{{ asset('frontend/fonts/flaticon/font/flaticon.css')}}">
     <link rel="stylesheet" href="{{ asset('frontend/fonts/icomoon/style.css')}}">
+    <link rel="stylesheet" href="{{ asset('frontend/font-awesome/css/font-awesome.min.css')}}">
 
     <!-- Styles -->
 
@@ -60,7 +53,7 @@
   <script src="{{ asset('frontend/js/jquery.waypoints.min.js')}}"></script>
   <script src="{{ asset('frontend/js/jquery.stellar.min.js')}}"></script>
   <script src="{{ asset('frontend/js/owl.carousel.min.js')}}"></script>
-  <script src="{{ asset('frontend/js/jquery.magnific-popup.min.js')}}"></script>  
+  <script src="{{ asset('frontend/js/jquery.magnific-popup.min.js')}}"></script>
    <script src="{{ asset('frontend/js/aos.js')}}"></script>
   <script src="{{ asset('frontend/js/jquery.animateNumber.min.js')}}"></script>
   <script src="{{ asset('frontend/js/bootstrap-datepicker.min.js')}}"></script>

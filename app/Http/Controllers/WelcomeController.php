@@ -11,10 +11,7 @@ class WelcomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
+
 
     /**
      * Show the application dashboard.
@@ -24,5 +21,12 @@ class WelcomeController extends Controller
     public function index()
     {
         return view('welcome');
+    }
+
+
+    public function getadmin()
+    {
+        return view('admin');
+
     }
 }
